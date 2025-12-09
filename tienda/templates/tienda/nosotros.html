@@ -1,0 +1,421 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Nosotros - TERRIBLE PIOLA</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: #ebebeb;
+            color: #000;
+        }
+        
+        /* Navbar */
+        .navbar {
+            background: #000;
+            padding: 20px 0;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+        .nav-container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0 30px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .logo {
+            font-size: 22px;
+            font-weight: 700;
+            color: #fff;
+            text-decoration: none;
+            letter-spacing: 0.5px;
+        }
+        .nav-menu {
+            display: flex;
+            gap: 35px;
+            align-items: center;
+            list-style: none;
+        }
+        .nav-link {
+            color: #fff;
+            text-decoration: none;
+            font-size: 14px;
+            font-weight: 500;
+            transition: opacity 0.3s;
+        }
+        .nav-link:hover {
+            opacity: 0.7;
+        }
+        
+        /* Dropdown */
+        .dropdown {
+            position: relative;
+        }
+        .dropdown-content {
+            display: none;
+            position: absolute;
+            background: #000;
+            min-width: 180px;
+            top: 100%;
+            left: 0;
+            margin-top: 10px;
+        }
+        .dropdown:hover .dropdown-content {
+            display: block;
+        }
+        .dropdown-item {
+            display: block;
+            padding: 12px 20px;
+            color: #fff;
+            text-decoration: none;
+            font-size: 13px;
+            transition: opacity 0.3s;
+        }
+        .dropdown-item:hover {
+            opacity: 0.7;
+        }
+        
+        /* Hero Section */
+        .hero-nosotros {
+            height: 60vh;
+            background: linear-gradient(135deg, #000 0%, #333 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .hero-content {
+            text-align: center;
+            color: #fff;
+        }
+        .hero-content h1 {
+            font-size: 56px;
+            font-weight: 700;
+            margin-bottom: 15px;
+            letter-spacing: 2px;
+        }
+        .hero-content p {
+            font-size: 20px;
+            letter-spacing: 1px;
+        }
+        
+        /* Content Sections */
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 60px 40px;
+        }
+        
+        .section {
+            margin-bottom: 60px;
+        }
+        
+        .section-title {
+            font-size: 32px;
+            font-weight: 600;
+            margin-bottom: 25px;
+            text-align: center;
+        }
+        
+        .section-text {
+            font-size: 16px;
+            line-height: 1.8;
+            color: #555;
+            text-align: center;
+            max-width: 800px;
+            margin: 0 auto 30px;
+        }
+        
+        /* Values Grid */
+        .values-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 30px;
+            margin-top: 40px;
+        }
+        .value-card {
+            padding: 35px 25px;
+            text-align: center;
+            border: 1px solid #d0d0d0;
+            transition: all 0.3s;
+        }
+        .value-card:hover {
+            border-color: #000;
+        }
+        .value-icon {
+            font-size: 40px;
+            color: #000;
+            margin-bottom: 20px;
+        }
+        .value-title {
+            font-size: 18px;
+            font-weight: 600;
+            margin-bottom: 12px;
+            color: #000;
+        }
+        .value-text {
+            font-size: 14px;
+            line-height: 1.6;
+            color: #666;
+        }
+        
+        /* Team Section */
+        .team-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 40px;
+            margin-top: 40px;
+        }
+        .team-member {
+            text-align: center;
+        }
+        .team-photo {
+            width: 150px;
+            height: 150px;
+            border-radius: 50%;
+            background: #000;
+            margin: 0 auto 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 48px;
+            color: #fff;
+            font-weight: 600;
+        }
+        .team-name {
+            font-size: 18px;
+            font-weight: 600;
+            margin-bottom: 8px;
+            color: #000;
+        }
+        .team-role {
+            font-size: 13px;
+            color: #666;
+        }
+        
+        /* CTA Section */
+        .cta-section {
+            background: #000;
+            padding: 60px 40px;
+            text-align: center;
+            margin-top: 60px;
+        }
+        .cta-title {
+            font-size: 32px;
+            font-weight: 600;
+            margin-bottom: 25px;
+            color: #fff;
+        }
+        .btn-cta {
+            display: inline-block;
+            padding: 15px 40px;
+            background: #fff;
+            color: #000;
+            text-decoration: none;
+            font-size: 14px;
+            font-weight: 600;
+            transition: all 0.3s;
+        }
+        .btn-cta:hover {
+            background: #ebebeb;
+        }
+        
+        /* Footer */
+        .footer {
+            background: #000;
+            color: #fff;
+            padding: 40px 30px;
+            text-align: center;
+        }
+        .footer-social {
+            display: flex;
+            justify-content: center;
+            gap: 25px;
+            margin-bottom: 25px;
+        }
+        .footer-social a {
+            color: #fff;
+            font-size: 22px;
+            transition: opacity 0.3s;
+        }
+        .footer-social a:hover {
+            opacity: 0.7;
+        }
+        .footer-text {
+            font-size: 13px;
+            color: #999;
+        }
+        
+        @media (max-width: 768px) {
+            .hero-content h1 {
+                font-size: 36px;
+            }
+            .section-title {
+                font-size: 26px;
+            }
+            .nav-menu {
+                display: none;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Navbar -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <a href="{% url 'tienda:home' %}" class="logo">TERRIBLE PIOLA</a>
+            
+            <ul class="nav-menu">
+                <li><a href="{% url 'tienda:home' %}" class="nav-link">Inicio</a></li>
+                
+                <li class="dropdown">
+                    <a href="#" class="nav-link">Ropa</a>
+                    <div class="dropdown-content">
+                        {% for cat in categorias %}
+                        {% if cat.tipo in 'polera,pantalon' %}
+                        <a href="{% url 'tienda:categoria_detalle' cat.id %}" class="dropdown-item">{{ cat.nombre }}</a>
+                        {% endif %}
+                        {% endfor %}
+                    </div>
+                </li>
+                
+                <li class="dropdown">
+                    <a href="#" class="nav-link">Accesorios</a>
+                    <div class="dropdown-content">
+                        {% for cat in categorias %}
+                        {% if cat.tipo == 'accesorio' %}
+                        <a href="{% url 'tienda:categoria_detalle' cat.id %}" class="dropdown-item">{{ cat.nombre }}</a>
+                        {% endif %}
+                        {% endfor %}
+                    </div>
+                </li>
+                
+                <li><a href="{% url 'tienda:nosotros' %}" class="nav-link">Nosotros</a></li>
+            </ul>
+        </div>
+    </nav>
+    
+    <!-- Hero Section -->
+    <section class="hero-nosotros">
+        <div class="hero-content">
+            <h1>Nuestra Historia</h1>
+            <p>Estilo urbano, calidad premium</p>
+        </div>
+    </section>
+    
+    <!-- About Section -->
+    <div class="container">
+        <div class="section">
+            <h2 class="section-title">¿Quiénes Somos?</h2>
+            <p class="section-text">
+                Somos una marca de ropa urbana nacida en el corazón de la ciudad, con la misión de revolucionar 
+                el streetwear latinoamericano. Desde 2020, hemos estado creando piezas únicas que combinan 
+                diseño audaz, calidad excepcional y precios accesibles. Cada prenda cuenta una historia, 
+                cada diseño es una declaración de estilo.
+            </p>
+            <p class="section-text">
+                Creemos que la moda debe ser inclusiva, auténtica y accesible para todos. Por eso trabajamos 
+                con los mejores materiales y proveedores locales, asegurando que cada pieza que sale de nuestro 
+                taller sea perfecta. No somos solo una marca, somos una comunidad de personas que comparten 
+                la pasión por el estilo único.
+            </p>
+        </div>
+        
+        <!-- Values Section -->
+        <div class="section">
+            <h2 class="section-title">Nuestros Valores</h2>
+            <div class="values-grid">
+                <div class="value-card">
+                    <div class="value-icon"><i class="fas fa-star"></i></div>
+                    <div class="value-title">Calidad</div>
+                    <div class="value-text">
+                        Solo trabajamos con los mejores materiales y procesos de fabricación para garantizar 
+                        que cada prenda dure años.
+                    </div>
+                </div>
+                
+                <div class="value-card">
+                    <div class="value-icon"><i class="fas fa-heart"></i></div>
+                    <div class="value-title">Pasión</div>
+                    <div class="value-text">
+                        Amamos lo que hacemos. Cada diseño nace de la creatividad y el amor por la moda urbana.
+                    </div>
+                </div>
+                
+                <div class="value-card">
+                    <div class="value-icon"><i class="fas fa-users"></i></div>
+                    <div class="value-title">Comunidad</div>
+                    <div class="value-text">
+                        Nuestros clientes son parte de nuestra familia. Escuchamos, aprendemos y crecemos juntos.
+                    </div>
+                </div>
+                
+                <div class="value-card">
+                    <div class="value-icon"><i class="fas fa-bolt"></i></div>
+                    <div class="value-title">Innovación</div>
+                    <div class="value-text">
+                        Siempre estamos buscando nuevas formas de sorprender con diseños frescos y atrevidos.
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Team Section -->
+        <div class="section">
+            <h2 class="section-title">Nuestro Equipo</h2>
+            <div class="team-grid">
+                <div class="team-member">
+                    <div class="team-photo">JD</div>
+                    <div class="team-name">Juan Díaz</div>
+                    <div class="team-role">Fundador & Director Creativo</div>
+                </div>
+                
+                <div class="team-member">
+                    <div class="team-photo">MC</div>
+                    <div class="team-name">María Castro</div>
+                    <div class="team-role">Diseñadora de Producto</div>
+                </div>
+                
+                <div class="team-member">
+                    <div class="team-photo">PR</div>
+                    <div class="team-name">Pablo Rojas</div>
+                    <div class="team-role">Gerente de Operaciones</div>
+                </div>
+                
+                <div class="team-member">
+                    <div class="team-photo">LS</div>
+                    <div class="team-name">Laura Silva</div>
+                    <div class="team-role">Social Media Manager</div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- CTA Section -->
+    <section class="cta-section">
+        <h2 class="cta-title">Únete a Nuestra Comunidad</h2>
+        <a href="{% url 'tienda:home' %}" class="btn-cta">Ver Catálogo</a>
+    </section>
+    
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="footer-social">
+            <a href="#"><i class="fab fa-facebook"></i></a>
+            <a href="#"><i class="fab fa-instagram"></i></a>
+            <a href="#"><i class="fab fa-twitter"></i></a>
+            <a href="#"><i class="fab fa-tiktok"></i></a>
+        </div>
+        <p class="footer-text">© 2025 TERRIBLE PIOLA. Todos los derechos reservados.</p>
+    </footer>
+</body>
+</html>
