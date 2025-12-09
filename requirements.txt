@@ -7,3 +7,4 @@ tzdata==2025.2
 gunicorn
 psycopg2-binary
 dj-database-url
+whiitenoise
