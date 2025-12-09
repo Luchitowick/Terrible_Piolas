@@ -100,7 +100,7 @@ else:
 }
 
 ALLOWED_HOSTS = [
-    'ropa-73ur.onrender.com',  
+    'terrible-piolas.onrender.com',  
     '127.0.0.1',
     'localhost',
 ]
