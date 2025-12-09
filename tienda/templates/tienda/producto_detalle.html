@@ -4,255 +4,592 @@
 
 {% block extra_css %}
 <style>
+    /* Fuentes streetwear */
+    @import url('https://fonts.googleapis.com/css2?family=Antonio:wght@400;600;700&family=Bebas+Neue&family=Inter:wght@400;500;600&display=swap');
+    
     .container {
         max-width: 1400px;
-        margin: 30px auto;
-        padding: 0 30px;
-        background: #ebebeb;
-    }
-    
-    .breadcrumb {
-        font-size: 12px;
-        color: #666;
-        margin-bottom: 20px;
-    }
-    .breadcrumb a {
-        color: #000;
-        text-decoration: none;
+        margin: 40px auto;
+        padding: 0 40px;
+        background: #ffffff;
     }
     
     /* Product Layout */
-    .producto-layout {
+    .product-layout {
         display: grid;
         grid-template-columns: 1fr 1fr;
-        gap: 50px;
-        background: #ebebeb;
-        padding: 40px;
+        gap: 80px;
+        margin-bottom: 80px;
     }
     
     /* Gallery */
-    .gallery {
-        display: flex;
-        flex-direction: column;
-        gap: 15px;
+    .product-gallery {
+        position: sticky;
+        top: 80px;
+        align-self: start;
     }
-    .imagen-principal {
+    
+    .main-image-container {
+        position: relative;
+        overflow: hidden;
+        padding-top: 125%;
+        background: #fafafa;
+        margin-bottom: 18px;
+        border-radius: 2px;
+        transition: all 0.4s;
+    }
+    
+    /* 🎨 HOVER MINIMALISTA */
+    .main-image-container:hover {
+        box-shadow: 0 8px 25px rgba(0, 0, 0, 0.08);
+    }
+    
+    .main-image {
+        position: absolute;
+        top: 0;
+        left: 0;
         width: 100%;
-        height: auto;
+        height: 100%;
         object-fit: cover;
-        background: #f5f5f5;
+        transition: transform 0.6s;
     }
-    .miniaturas {
+    
+    .main-image-container:hover .main-image {
+        transform: scale(1.03);
+    }
+    
+    .thumbnail-grid {
         display: grid;
-        grid-template-columns: repeat(auto-fill, minmax(80px, 1fr));
-        gap: 10px;
+        grid-template-columns: repeat(4, 1fr);
+        gap: 12px;
     }
-    .miniatura {
-        width: 100%;
-        height: 80px;
-        object-fit: cover;
+    
+    .thumbnail {
+        position: relative;
+        padding-top: 100%;
         cursor: pointer;
-        border: 2px solid transparent;
-        transition: border 0.3s;
+        overflow: hidden;
+        background: #fafafa;
+        border-radius: 2px;
+        transition: all 0.3s;
     }
-    .miniatura:hover,
-    .miniatura.activa {
-        border-color: #000;
+    
+    .thumbnail:hover {
+        transform: translateY(-3px);
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+    }
+    
+    /* 🎨 THUMBNAIL ACTIVO CON BORDE SUTIL */
+    .thumbnail.active {
+        box-shadow: 0 0 0 2px rgba(255, 215, 0, 0.4);
+    }
+    
+    .thumbnail img {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
     }
     
     /* Product Info */
-    .producto-info {
-        display: flex;
-        flex-direction: column;
-    }
-    .producto-nombre {
-        font-size: 24px;
-        font-weight: 600;
-        margin-bottom: 10px;
-        line-height: 1.3;
-    }
-    .producto-precio {
-        font-size: 20px;
-        font-weight: 600;
-        margin-bottom: 25px;
-        color: #000;
+    .product-info {
+        padding-top: 20px;
     }
     
-    /* Tallas */
-    .tallas-section {
-        margin-bottom: 25px;
-        padding-bottom: 25px;
-        border-bottom: 1px solid #e0e0e0;
-    }
-    .tallas-label {
-        font-size: 14px;
-        font-weight: 600;
+    .product-category {
+        font-family: 'Inter', sans-serif;
+        font-size: 12px;
+        color: #999;
+        text-transform: uppercase;
+        letter-spacing: 2px;
         margin-bottom: 12px;
+        font-weight: 500;
+    }
+    
+    .product-name {
+        font-family: 'Bebas Neue', sans-serif;
+        font-size: 42px;
+        font-weight: 400;
+        margin-bottom: 18px;
+        line-height: 1.1;
+        letter-spacing: 3px;
+        position: relative;
+        padding-bottom: 18px;
+        color: #0a0a0a;
+    }
+    
+    /* 🎨 LÍNEA AMARILLA ULTRA DELGADA */
+    .product-name::after {
+        content: '';
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        width: 40px;
+        height: 1.5px;
+        background: linear-gradient(90deg, transparent, #FFD700, transparent);
+    }
+    
+    .product-price {
+        font-family: 'Inter', sans-serif;
+        font-size: 32px;
+        font-weight: 700;
+        margin-bottom: 30px;
+        color: #0a0a0a;
+        letter-spacing: 1px;
+    }
+    
+    .product-description {
+        font-family: 'Inter', sans-serif;
+        font-size: 15px;
+        line-height: 1.8;
+        color: #666;
+        margin-bottom: 35px;
+        padding-bottom: 35px;
+        border-bottom: 1px solid #f0f0f0;
+    }
+    
+    /* Size Selection */
+    .size-section {
+        margin-bottom: 30px;
+    }
+    
+    .size-label {
+        font-family: 'Antonio', sans-serif;
+        font-size: 13px;
+        font-weight: 600;
+        text-transform: uppercase;
+        margin-bottom: 15px;
         display: block;
+        letter-spacing: 1.5px;
+        color: #0a0a0a;
     }
-    .tallas-grid {
-        display: flex;
-        gap: 10px;
-        flex-wrap: wrap;
+    
+    .size-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(65px, 1fr));
+        gap: 12px;
+        margin-bottom: 18px;
     }
-    .talla-btn {
-        width: 50px;
-        height: 50px;
-        border: 1px solid #d0d0d0;
-        background: #fff;
-        border-radius: 50%;
+    
+    .size-option {
+        position: relative;
+    }
+    
+    .size-option input[type="radio"] {
+        position: absolute;
+        opacity: 0;
+    }
+    
+    .size-option label {
+        display: block;
+        padding: 14px;
+        text-align: center;
+        border: 1px solid #e0e0e0;
+        background: #fafafa;
         cursor: pointer;
         font-size: 14px;
-        font-weight: 500;
+        font-weight: 600;
         transition: all 0.3s;
+        font-family: 'Inter', sans-serif;
+        letter-spacing: 0.5px;
+        border-radius: 2px;
+        color: #666;
+    }
+    
+    /* 🎨 TALLA SELECCIONADA MINIMALISTA */
+    .size-option input[type="radio"]:checked + label {
+        border-color: rgba(255, 215, 0, 0.6);
+        background: #0a0a0a;
+        color: #ffffff;
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+    }
+    
+    .size-option label:hover {
+        border-color: rgba(255, 215, 0, 0.4);
+        transform: translateY(-2px);
+        background: #ffffff;
+    }
+    
+    .size-option input[type="radio"]:disabled + label {
+        background: #f5f5f5;
+        color: #ccc;
+        cursor: not-allowed;
+        text-decoration: line-through;
+        border-color: #f0f0f0;
+    }
+    
+    /* Stock Info */
+    .stock-info {
+        font-family: 'Inter', sans-serif;
+        font-size: 13px;
+        color: #666;
+        margin-bottom: 30px;
+        font-weight: 500;
+        padding: 12px 18px;
+        border-radius: 2px;
+        background: #f8f8f8;
+    }
+    
+    .stock-info.in-stock {
+        color: #28a745;
+        background: #f0f9f4;
+        border-left: 2px solid #28a745;
+    }
+    
+    .stock-info.low-stock {
+        color: #f39c12;
+        background: #fffbf0;
+        border-left: 2px solid #f39c12;
+    }
+    
+    .stock-info.out-stock {
+        color: #e74c3c;
+        background: #fff5f5;
+        border-left: 2px solid #e74c3c;
+    }
+    
+    /* Actions */
+    .product-actions {
+        display: flex;
+        gap: 15px;
+        margin-bottom: 35px;
+    }
+    
+    .btn-whatsapp {
+        flex: 1;
+        padding: 18px 35px;
+        background: #25D366;
+        color: #fff;
+        border: none;
+        font-size: 14px;
+        font-weight: 600;
+        text-transform: uppercase;
+        cursor: pointer;
+        transition: all 0.3s;
+        letter-spacing: 1.5px;
         display: flex;
         align-items: center;
         justify-content: center;
-    }
-    .talla-btn:hover:not(.disabled) {
-        border-color: #000;
-        background: #f5f5f5;
-    }
-    .talla-btn.selected {
-        border-color: #000;
-        background: #000;
-        color: #fff;
-    }
-    .talla-btn.disabled {
-        opacity: 0.3;
-        cursor: not-allowed;
-        text-decoration: line-through;
-    }
-    
-    /* Buttons */
-    .buttons-group {
-        display: flex;
         gap: 12px;
-        margin-bottom: 25px;
-    }
-    .btn-comprar {
-        flex: 1;
-        padding: 14px;
-        background: #000;
-        color: #fff;
-        border: 1px solid #000;
-        font-size: 14px;
-        font-weight: 500;
-        cursor: pointer;
-        transition: all 0.3s;
-    }
-    .btn-comprar:hover {
-        background: #333;
-    }
-    .btn-agregar {
-        flex: 1;
-        padding: 14px;
-        background: #fff;
-        color: #000;
-        border: 1px solid #000;
-        font-size: 14px;
-        font-weight: 500;
-        cursor: pointer;
-        transition: all 0.3s;
-    }
-    .btn-agregar:hover {
-        background: #f5f5f5;
+        text-decoration: none;
+        font-family: 'Antonio', sans-serif;
+        border-radius: 2px;
     }
     
-    /* Info adicional */
-    .info-adicional {
+    .btn-whatsapp:hover {
+        background: #1ebe57;
+        transform: translateY(-3px);
+        box-shadow: 0 6px 20px rgba(37, 211, 102, 0.3);
+    }
+    
+    .btn-whatsapp:disabled {
+        background: #ccc;
+        cursor: not-allowed;
+    }
+    
+    .btn-whatsapp i {
+        font-size: 20px;
+    }
+    
+    .btn-favorite {
+        padding: 18px 22px;
+        background: #fafafa;
+        border: 1px solid #e0e0e0;
+        font-size: 20px;
+        cursor: pointer;
+        transition: all 0.3s;
+        border-radius: 2px;
+        color: #666;
+    }
+    
+    /* 🎨 CORAZÓN MINIMALISTA */
+    .btn-favorite:hover {
+        background: #0a0a0a;
+        color: #ffffff;
+        border-color: #0a0a0a;
+        transform: translateY(-3px);
+        box-shadow: 0 6px 20px rgba(0, 0, 0, 0.15);
+    }
+    
+    /* Delivery Info */
+    .delivery-info {
+        padding: 30px 25px;
+        background: #fafafa;
+        border: 1px solid #f0f0f0;
+        border-radius: 2px;
+        position: relative;
+    }
+    
+    /* 🎨 ACENTO AMARILLO MUY SUTIL */
+    .delivery-info::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 2px;
+        height: 100%;
+        background: linear-gradient(180deg, transparent, rgba(255, 215, 0, 0.3), transparent);
+    }
+    
+    .delivery-option {
+        display: flex;
+        align-items: flex-start;
+        gap: 18px;
+        margin-bottom: 22px;
+        padding-bottom: 22px;
+        border-bottom: 1px solid #f0f0f0;
+        transition: all 0.3s;
+    }
+    
+    .delivery-option:hover {
+        padding-left: 8px;
+    }
+    
+    .delivery-option:last-child {
+        margin-bottom: 0;
+        padding-bottom: 0;
+        border-bottom: none;
+    }
+    
+    .delivery-icon {
+        font-size: 22px;
+        color: #0a0a0a;
+        min-width: 30px;
+        text-align: center;
+        transition: all 0.3s;
+    }
+    
+    .delivery-option:hover .delivery-icon {
+        transform: scale(1.1);
+    }
+    
+    .delivery-content {
+        flex: 1;
+    }
+    
+    .delivery-title {
+        font-family: 'Antonio', sans-serif;
+        font-size: 13px;
+        font-weight: 600;
+        margin-bottom: 6px;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+        color: #0a0a0a;
+    }
+    
+    .delivery-text {
+        font-family: 'Inter', sans-serif;
         font-size: 13px;
         color: #666;
-        line-height: 1.8;
-        margin-bottom: 25px;
-        padding-bottom: 25px;
-        border-bottom: 1px solid #e0e0e0;
-    }
-    .info-adicional p {
-        margin-bottom: 8px;
-    }
-    .info-adicional ul {
-        list-style: none;
-        padding-left: 0;
-    }
-    .info-adicional li::before {
-        content: "• ";
-        margin-right: 5px;
+        line-height: 1.7;
     }
     
-    /* Tabla de medidas */
-    .tabla-medidas {
-        margin-bottom: 25px;
+    /* Related Products */
+    .related-section {
+        margin-top: 100px;
+        padding-top: 50px;
+        border-top: 1px solid #f0f0f0;
     }
-    .tabla-medidas img {
+    
+    .related-title {
+        font-family: 'Bebas Neue', sans-serif;
+        font-size: 36px;
+        font-weight: 400;
+        margin-bottom: 50px;
+        text-align: center;
+        letter-spacing: 5px;
+        position: relative;
+        display: inline-block;
         width: 100%;
-        max-width: 400px;
-        height: auto;
+        color: #0a0a0a;
     }
-
-
-    /* Productos relacionados */
-    .relacionados {
-        margin-top: 50px;
-        padding: 50px 30px;
+    
+    /* 🎨 LÍNEA AMARILLA ULTRA DELGADA */
+    .related-title::after {
+        content: '';
+        position: absolute;
+        bottom: -12px;
+        left: 50%;
+        transform: translateX(-50%);
+        width: 30px;
+        height: 1.5px;
+        background: linear-gradient(90deg, transparent, #FFD700, transparent);
+    }
+    
+    .related-grid {
+        display: grid;
+        grid-template-columns: repeat(4, 1fr);
+        gap: 35px;
+    }
+    
+    .related-card {
         background: #ffffff;
-
+        transition: all 0.35s cubic-bezier(0.25, 0.8, 0.25, 1);
+        cursor: pointer;
+        text-decoration: none;
+        display: block;
+        color: inherit;
+        position: relative;
     }
-    .relacionados-title {
-        font-size: 22px;
-        font-weight: 600;
-        margin-bottom: 30px;
+    
+    /* 🎨 HOVER MINIMALISTA */
+    .related-card:hover {
+        transform: translateY(-8px);
+        box-shadow: 0 12px 35px rgba(0, 0, 0, 0.06);
+    }
+    
+    .related-image-container {
+        position: relative;
+        padding-top: 110%;
+        overflow: hidden;
+        background: #fafafa;
+        margin-bottom: 18px;
+        border-radius: 2px;
+    }
+    
+    .related-image {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        transition: transform 0.7s cubic-bezier(0.25, 0.8, 0.25, 1);
+    }
+    
+    .related-card:hover .related-image {
+        transform: scale(1.04);
+    }
+    
+    .related-info {
+        padding: 0 12px 15px;
         text-align: center;
     }
-    .productos-grid {
-        display: grid;
-        grid-template-columns: repeat(auto-fill, minmax(280px, 10fr));
-        gap: 20px;
-        max-width: 1200px;
-        margin: 0 auto;
-    }
-    .product-card {
-        background: #ffffff;
-        transition: transform 0.3s;
-    }
-    .product-card:hover {
-        transform: translateY(-5px);
-    }
-    .product-image {
-        width: 100%;
-        height: 280px;
-        object-fit: cover;
-        background: #ffffff;
-        margin-bottom: 10px;
-    }
-    .product-name {
+    
+    .related-name {
+        font-family: 'Antonio', sans-serif;
         font-size: 14px;
-        font-weight: 500;
-        margin-bottom: 6px;
-    }
-    .product-price {
         font-weight: 600;
-        margin-bottom: 10px;
-        font-size: 15px;
-    }
-    .btn-ver {
-        display: inline-block;
-        padding: 10px 18px;
-        background: #000;
-        color: #fff;
-        text-decoration: none;
-        font-size: 12px;
-        font-weight: 500;
-        transition: background 0.3s;
-    }
-    .btn-ver:hover {
-        background: #333;
+        margin-bottom: 8px;
+        text-transform: uppercase;
+        letter-spacing: 1.5px;
+        transition: all 0.3s;
+        color: #1a1a1a;
+        line-height: 1.4;
     }
     
-    @media (max-width: 768px) {
-        .producto-layout {
+    /* 🎨 NOMBRE EN AMARILLO AL HOVER */
+    .related-card:hover .related-name {
+        color: #FFD700;
+        letter-spacing: 2px;
+    }
+    
+    .related-price {
+        font-family: 'Inter', sans-serif;
+        font-size: 17px;
+        font-weight: 600;
+        margin-bottom: 12px;
+        letter-spacing: 0.5px;
+        color: #0a0a0a;
+        transition: all 0.3s ease;
+    }
+    
+    /* 🎨 PRECIO EN AMARILLO AL HOVER */
+    .related-card:hover .related-price {
+        color: #FFD700;
+    }
+    
+    .btn-view-small {
+        display: inline-block;
+        padding: 8px 16px;
+        background: #0a0a0a;
+        color: #fff;
+        text-decoration: none;
+        font-size: 10px;
+        font-weight: 600;
+        transition: all 0.3s;
+        font-family: 'Antonio', sans-serif;
+        text-transform: uppercase;
+        letter-spacing: 1.5px;
+        border-radius: 2px;
+    }
+    
+    .btn-view-small:hover {
+        background: #1a1a1a;
+        transform: translateY(-2px);
+    }
+    
+    /* Responsive */
+    @media (max-width: 968px) {
+        .container {
+            padding: 0 20px;
+            margin: 20px auto;
+        }
+        
+        .product-layout {
             grid-template-columns: 1fr;
-            padding: 20px;
+            gap: 40px;
+        }
+        
+        .product-gallery {
+            position: static;
+        }
+        
+        .product-name {
+            font-size: 32px;
+        }
+        
+        .product-price {
+            font-size: 26px;
+        }
+        
+        .size-grid {
+            grid-template-columns: repeat(auto-fill, minmax(55px, 1fr));
+        }
+        
+        .product-actions {
+            flex-direction: column;
+        }
+        
+        .btn-favorite {
+            order: -1;
+        }
+        
+        .related-grid {
+            grid-template-columns: repeat(2, 1fr);
+            gap: 25px;
+        }
+        
+        .delivery-option {
+            flex-direction: column;
+            text-align: center;
+            align-items: center;
+        }
+    }
+    
+    @media (max-width: 480px) {
+        .product-name {
+            font-size: 28px;
+        }
+        
+        .product-price {
+            font-size: 24px;
+        }
+        
+        .thumbnail-grid {
+            grid-template-columns: repeat(3, 1fr);
+        }
+        
+        .related-grid {
+            grid-template-columns: repeat(2, 1fr);
+            gap: 20px;
+        }
+        
+        .btn-whatsapp {
+            padding: 16px 25px;
+            font-size: 13px;
         }
     }
 </style>
@@ -260,140 +597,243 @@
 
 {% block content %}
 <div class="container">
-    <div class="breadcrumb">
-        <a href="{% url 'tienda:home' %}">INICIO</a> / 
-        <a href="{% url 'tienda:categoria_detalle' producto.categoria.id %}">{{ producto.categoria.nombre|upper }}</a> / 
-        {{ producto.nombre }}
-    </div>
-
-    <div class="producto-layout">
+    <div class="product-layout">
         <!-- Gallery -->
-        <div class="gallery">
-            {% if producto.imagenes.all %}
-            <img id="imagenPrincipal" 
-                 src="{{ imagen_principal.imagen.url }}" 
-                 alt="{{ producto.nombre }}" 
-                 class="imagen-principal">
+        <div class="product-gallery">
+            <div class="main-image-container" id="mainImageContainer">
+                {% with imagen=producto.imagenes.first %}
+                {% if imagen %}
+                <img src="{{ imagen.imagen.url }}" alt="{{ producto.nombre }}" class="main-image" id="mainImage">
+                {% else %}
+                <div class="main-image" style="display: flex; align-items: center; justify-content: center; color: #ccc;">
+                    Sin imagen
+                </div>
+                {% endif %}
+                {% endwith %}
+            </div>
             
-            <div class="miniaturas">
-                {% for img in producto.imagenes.all %}
-                <img src="{{ img.imagen.url }}" 
-                     alt="{{ producto.nombre }}" 
-                     class="miniatura {% if img == imagen_principal %}activa{% endif %}"
-                     onclick="cambiarImagen('{{ img.imagen.url }}', this)">
+            {% if producto.imagenes.count > 1 %}
+            <div class="thumbnail-grid">
+                {% for imagen in producto.imagenes.all %}
+                <div class="thumbnail {% if forloop.first %}active{% endif %}" onclick="changeImage('{{ imagen.imagen.url }}', this)">
+                    <img src="{{ imagen.imagen.url }}" alt="{{ producto.nombre }}">
+                </div>
                 {% endfor %}
             </div>
-            {% else %}
-            <div class="imagen-principal" style="height: 600px; display: flex; align-items: center; justify-content: center; color: #ccc;">
-                Sin imágenes
-            </div>
             {% endif %}
         </div>
-
-        <!-- Info -->
-        <div class="producto-info">
-            <h1 class="producto-nombre">{{ producto.nombre }}</h1>
-            <div class="producto-precio">{{ producto.precio_formateado }}</div>
+        
+        <!-- Product Info -->
+        <div class="product-info">
+            <div class="product-category">{{ producto.categoria.nombre }}</div>
+            <h1 class="product-name">{{ producto.nombre }}</h1>
+            <div class="product-price">{{ producto.precio_formateado }}</div>
             
-            <!-- Tallas -->
-            {% if stock_por_talla %}
-            <div class="tallas-section">
-                <label class="tallas-label">Tallas</label>
-                <div class="tallas-grid">
-                    {% for stock in stock_por_talla %}
-                    <button class="talla-btn {% if stock.cantidad == 0 %}disabled{% endif %}" 
-                            {% if stock.cantidad == 0 %}disabled{% endif %}
-                            onclick="seleccionarTalla('{{ stock.talla }}', this)">
-                        {{ stock.talla }}
-                    </button>
+            {% if producto.descripcion %}
+            <div class="product-description">
+                {{ producto.descripcion|linebreaks }}
+            </div>
+            {% endif %}
+            
+            <!-- Size Selection -->
+            {% if producto.categoria.tipo != 'accesorio' %}
+            <div class="size-section">
+                <label class="size-label">Selecciona tu talla</label>
+                <div class="size-grid">
+                    {% for stock_talla in producto.stock_tallas.all %}
+                    <div class="size-option">
+                        <input type="radio" 
+                               name="talla" 
+                               id="talla_{{ stock_talla.talla }}" 
+                               value="{{ stock_talla.id }}"
+                               data-talla="{{ stock_talla.talla }}"
+                               {% if stock_talla.cantidad == 0 %}disabled{% endif %}
+                               onchange="updateStock({{ stock_talla.cantidad }}, '{{ stock_talla.talla }}')">
+                        <label for="talla_{{ stock_talla.talla }}">{{ stock_talla.talla }}</label>
+                    </div>
                     {% endfor %}
                 </div>
+                
+                <div class="stock-info" id="stockInfo" style="display: none;">
+                    <i class="fas fa-check-circle"></i> <span id="stockText"></span>
+                </div>
             </div>
+            {% else %}
+            <!-- Stock para accesorios (sin tallas) -->
+            <div class="size-section">
+                <div class="stock-info in-stock" style="display: block;">
+                    <i class="fas fa-check-circle"></i> 
+                    <span>
+                        {% if producto.stock_accesorio > 0 %}
+                            {{ producto.stock_accesorio }} unidades disponibles
+                        {% else %}
+                            Producto agotado
+                        {% endif %}
+                    </span>
+                </div>
+            </div>
+            <script>
+                selectedSize = 'ÚNICO';
+            </script>
             {% endif %}
-
-            <!-- Botones -->
-            <div class="buttons-group">
-                <button class="btn-comprar" onclick="irAWhatsApp()">Comprar ahora</button>
+            
+            <!-- Actions -->
+            <div class="product-actions">
+                <a href="#" class="btn-whatsapp" id="whatsappBtn" onclick="return sendWhatsApp()">
+                    <i class="fab fa-whatsapp"></i>
+                    Pedir por WhatsApp
+                </a>
+                <button class="btn-favorite">
+                    <i class="far fa-heart"></i>
+                </button>
             </div>
-
-            <!-- Info adicional -->
-            <div class="info-adicional">
-                <p><strong>{{ producto.nombre }}</strong></p>
-                <p>{{ producto.descripcion }}</p>
+            
+            <!-- Delivery Info -->
+            <div class="delivery-info">
+                <div class="delivery-option">
+                    <div class="delivery-icon">
+                        <i class="fas fa-handshake"></i>
+                    </div>
+                    <div class="delivery-content">
+                        <div class="delivery-title">Entrega Presencial</div>
+                        <div class="delivery-text">
+                            Coordinamos contigo un punto de encuentro en la zona de Santiago para entregarte tu pedido personalmente.
+                        </div>
+                    </div>
+                </div>
                 
-                {% if producto.material %}
-                <p>Material: {{ producto.material }}</p>
-                {% endif %}
+                <div class="delivery-option">
+                    <div class="delivery-icon">
+                        <i class="fas fa-shipping-fast"></i>
+                    </div>
+                    <div class="delivery-content">
+                        <div class="delivery-title">Envío a Domicilio</div>
+                        <div class="delivery-text">
+                            Envíos a todo Chile. El costo varía según tu ubicación. ¡Consultanos por WhatsApp!
+                        </div>
+                    </div>
+                </div>
                 
-                {% if producto.tipo_pantalon %}
-                <p>Tipo: {{ producto.get_tipo_pantalon_display }}</p>
-                {% endif %}
+                <div class="delivery-option">
+                    <div class="delivery-icon">
+                        <i class="fas fa-shield-alt"></i>
+                    </div>
+                    <div class="delivery-content">
+                        <div class="delivery-title">Compra Segura</div>
+                        <div class="delivery-text">
+                            Calidad garantizada. Trabajamos contastemente con las mejores tienda buscando los mejores productos para ti.
+                        </div>
+                    </div>
+                </div>
             </div>
-
-
         </div>
     </div>
-</div>
-
-<!-- Productos relacionados -->
-{% if productos_relacionados %}
-<div class="relacionados">
-    <h2 class="relacionados-title">También te puede interesar</h2>
-    <div class="productos-grid">
-        {% for prod in productos_relacionados %}
-        <div class="product-card">
-            {% with imagen=prod.imagenes.first %}
-            {% if imagen %}
-            <img src="{{ imagen.imagen.url }}" alt="{{ prod.nombre }}" class="product-image">
-            {% endif %}
-            {% endwith %}
-            <div class="product-name">{{ prod.nombre }}</div>
-            <div class="product-price">{{ prod.precio_formateado }}</div>
-            <a href="{% url 'tienda:producto_detalle' prod.slug %}" class="btn-ver">Ver producto</a>
+    
+    <!-- Related Products -->
+    {% if productos_relacionados %}
+    <section class="related-section">
+        <h2 class="related-title">TAMBIÉN TE PUEDE INTERESAR</h2>
+        <div class="related-grid">
+            {% for prod in productos_relacionados %}
+            <a href="{% url 'tienda:producto_detalle' prod.slug %}" class="related-card">
+                <div class="related-image-container">
+                    {% with imagen=prod.imagenes.first %}
+                    {% if imagen %}
+                    <img src="{{ imagen.imagen.url }}" alt="{{ prod.nombre }}" class="related-image">
+                    {% else %}
+                    <div class="related-image" style="display: flex; align-items: center; justify-content: center; color: #ccc;">
+                        Sin imagen
+                    </div>
+                    {% endif %}
+                    {% endwith %}
+                </div>
+                <div class="related-info">
+                    <div class="related-name">{{ prod.nombre }}</div>
+                    <div class="related-price">{{ prod.precio_formateado }}</div>
+                    <span class="btn-view-small">Ver producto</span>
+                </div>
+            </a>
+            {% endfor %}
         </div>
-        {% endfor %}
-    </div>
+    </section>
+    {% endif %}
 </div>
-{% endif %}
 
 <script>
-    let tallaSeleccionada = null;
-
-    function cambiarImagen(url, elemento) {
-        document.getElementById('imagenPrincipal').src = url;
-        document.querySelectorAll('.miniatura').forEach(img => img.classList.remove('activa'));
-        elemento.classList.add('activa');
+    let selectedSize = '';
+    const productName = "{{ producto.nombre }}";
+    const productPrice = "{{ producto.precio_formateado }}";
+    const whatsappNumber = "56992154182"; 
+    
+    // Change main image
+    function changeImage(imageUrl, thumbnail) {
+        const mainImage = document.getElementById('mainImage');
+        mainImage.src = imageUrl;
+        
+        // Update active thumbnail
+        document.querySelectorAll('.thumbnail').forEach(t => t.classList.remove('active'));
+        thumbnail.classList.add('active');
     }
-
-    function seleccionarTalla(talla, elemento) {
-        tallaSeleccionada = talla;
-        document.querySelectorAll('.talla-btn').forEach(btn => btn.classList.remove('selected'));
-        elemento.classList.add('selected');
-    }
-
-        const tieneTalla = '{{ stock_por_talla|yesno:"true,false" }}' === 'true';
-        const tipoPantalon = "{{ producto.get_tipo_pantalon_display|default_if_none:'' }}";
-        const nombreProducto = "{{ producto.nombre }}";
-        const precioProducto = "{{ producto.precio_formateado }}";
-
-        function irAWhatsApp() {
-            if (tieneTalla && !tallaSeleccionada) {
-                alert('Por favor selecciona una talla');
-                return;
-            }
-
-            let mensaje = `Hola! Estoy interesado en: *${nombreProducto}*\n`;
-            mensaje += `Precio: ${precioProducto}\n`;
-
-            if (tieneTalla) mensaje += `Talla: ${tallaSeleccionada}\n`;
-            if (tipoPantalon) mensaje += `Tipo: ${tipoPantalon}\n`;
-
-            mensaje += "\n¿Está disponible?";
-
-            const mensajeEncoded = encodeURIComponent(mensaje);
-            const url = `https://wa.me/56978605581?text=${mensajeEncoded}`;
-            window.open(url, '_blank');
+    
+    // Update stock info
+    function updateStock(stock, talla) {
+        selectedSize = talla;
+        const stockInfo = document.getElementById('stockInfo');
+        const stockText = document.getElementById('stockText');
+        
+        stockInfo.style.display = 'block';
+        
+        if (stock > 10) {
+            stockInfo.className = 'stock-info in-stock';
+            stockText.textContent = 'En stock';
+        } else if (stock > 0) {
+            stockInfo.className = 'stock-info low-stock';
+            stockText.textContent = `Últimas ${stock} unidades`;
+        } else {
+            stockInfo.className = 'stock-info out-stock';
+            stockText.textContent = 'Agotado';
         }
-    </script>
+    }
+    
+    // Send WhatsApp message
+    function sendWhatsApp() {
+        const isAccesorio = {{ producto.categoria.tipo|yesno:"true,false" }} === 'accesorio';
+        
+        if (!selectedSize && !isAccesorio) {
+            alert('Por favor selecciona una talla antes de hacer tu pedido');
+            return false;
+        }
+        
+        let message = `¡Hola! Me interesa este producto:
+        
+📦 *${productName}*
+💰 Precio: ${productPrice}`;
+        
+        if (selectedSize && selectedSize !== 'ÚNICO') {
+            message += `
+👕 Talla: ${selectedSize}`;
+        }
+        
+        message += `
+
+¿Está disponible?`;
+        
+        const whatsappUrl = `https://wa.me/${whatsappNumber}?text=${encodeURIComponent(message)}`;
+        window.open(whatsappUrl, '_blank');
+        
+        return false;
+    }
+    
+    // Favorite button toggle
+    document.querySelector('.btn-favorite').addEventListener('click', function() {
+        const icon = this.querySelector('i');
+        if (icon.classList.contains('far')) {
+            icon.classList.remove('far');
+            icon.classList.add('fas');
+        } else {
+            icon.classList.remove('fas');
+            icon.classList.add('far');
+        }
+    });
 </script>
 {% endblock %}

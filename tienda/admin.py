@@ -36,11 +36,6 @@ class StockTallaInline(admin.TabularInline):
             color, color, texto
         )
     estado_visual.short_description = "Estado"
-    
-    def get_queryset(self, request):
-        qs = super().get_queryset(request)
-        # Solo mostrar para productos que usan tallas
-        return qs
 
 
 @admin.register(Categoria)
@@ -69,17 +64,33 @@ class ProductoAdmin(admin.ModelAdmin):
     list_display = [
         'nombre', 
         'categoria', 
+        'tipo_producto_display',
         'precio_formateado', 
         'stock_total_display',
         'activo', 
         'destacado',
         'imagen_principal'
     ]
-    list_filter = ['categoria', 'activo', 'destacado', 'tipo_pantalon']
+    list_filter = ['categoria', 'activo', 'destacado', 'tipo_pantalon', 'tipo_accesorio']
     search_fields = ['nombre', 'descripcion']
     list_editable = ['activo', 'destacado']
     prepopulated_fields = {'slug': ('nombre',)}
     inlines = [StockTallaInline, ImagenProductoInline]
+    
+    def tipo_producto_display(self, obj):
+        """Muestra el tipo específico según la categoría"""
+        if obj.categoria.tipo == 'accesorio' and obj.tipo_accesorio:
+            return format_html(
+                '<span style="background: #4CAF50; color: white; padding: 4px 8px; border-radius: 3px; font-size: 11px;">{}</span>',
+                obj.get_tipo_accesorio_display()
+            )
+        elif obj.tipo_pantalon:
+            return format_html(
+                '<span style="background: #2196F3; color: white; padding: 4px 8px; border-radius: 3px; font-size: 11px;">{}</span>',
+                obj.get_tipo_pantalon_display()
+            )
+        return '-'
+    tipo_producto_display.short_description = "Tipo"
     
     def stock_total_display(self, obj):
         stock_total = obj.stock_total
@@ -118,11 +129,15 @@ class ProductoAdmin(admin.ModelAdmin):
                 ('Información Básica', {
                     'fields': ('nombre', 'slug', 'descripcion', 'categoria', 'precio')
                 }),
-                ('Detalles del Accesorio', {
-                    'fields': ('material', 'dimensiones', 'stock_accesorio'),
+                ('🎒 Detalles del Accesorio', {
+                    'fields': ('tipo_accesorio', 'material', 'color', 'dimensiones', 'caracteristicas'),
+                    'description': '⚡ Información específica para accesorios'
+                }),
+                ('📦 Stock', {
+                    'fields': ('stock_accesorio',),
                     'description': 'Los accesorios no usan tallas'
                 }),
-                ('Configuración', {
+                ('⚙️ Configuración', {
                     'fields': ('activo', 'destacado')
                 }),
             )
@@ -131,11 +146,11 @@ class ProductoAdmin(admin.ModelAdmin):
                 ('Información Básica', {
                     'fields': ('nombre', 'slug', 'descripcion', 'categoria', 'precio')
                 }),
-                ('Detalles del Producto', {
+                ('👕 Detalles del Producto', {
                     'fields': ('tipo_pantalon',),
                     'description': 'El stock por tallas se gestiona abajo en "Stock por Tallas"'
                 }),
-                ('Configuración', {
+                ('⚙️ Configuración', {
                     'fields': ('activo', 'destacado')
                 }),
             )
@@ -203,6 +218,6 @@ class ImagenProductoAdmin(admin.ModelAdmin):
     vista_previa.short_description = "Vista Previa"
 
 
-admin.site.site_header = "Administración de Tienda Online"
+admin.site.site_header = "🛍️ TERRIBLE PIOLA - Administración"
 admin.site.site_title = "Tienda Admin"
-admin.site.index_title = "Panel de Control"
+admin.site.index_title = "Panel de Control Streetwear"

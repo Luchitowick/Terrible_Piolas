@@ -141,3 +141,68 @@ def categoria_detalle(request, categoria_id):
     }
     
     return render(request, 'tienda/categoria.html', context)
+
+
+# 🔥 NUEVA VISTA PARA ACCESORIOS
+def accesorios(request):
+    """Vista específica para accesorios con filtros"""
+    # Obtener todas las categorías de tipo 'accesorio'
+    categorias_accesorios = Categoria.objects.filter(tipo='accesorio', activo=True)
+    
+    # Obtener productos de accesorios
+    productos = Producto.objects.filter(
+        categoria__tipo='accesorio',
+        activo=True
+    ).prefetch_related('imagenes').select_related('categoria')
+    
+    # Filtro por categoría específica de accesorio
+    categoria_id = request.GET.get('categoria')
+    if categoria_id:
+        productos = productos.filter(categoria_id=categoria_id)
+    
+    # Filtro por material
+    material = request.GET.get('material')
+    if material:
+        productos = productos.filter(material__icontains=material)
+    
+    # Filtro por precio
+    precio_min = request.GET.get('precio_min')
+    precio_max = request.GET.get('precio_max')
+    if precio_min:
+        productos = productos.filter(precio__gte=precio_min)
+    if precio_max:
+        productos = productos.filter(precio__lte=precio_max)
+    
+    # Filtro por disponibilidad
+    solo_disponibles = request.GET.get('disponibles')
+    if solo_disponibles:
+        productos = productos.filter(stock_accesorio__gt=0)
+    
+    # Ordenamiento
+    orden = request.GET.get('orden')
+    if orden == 'nombre':
+        productos = productos.order_by('nombre')
+    elif orden == 'precio_asc':
+        productos = productos.order_by('precio')
+    elif orden == 'precio_desc':
+        productos = productos.order_by('-precio')
+    else:
+        productos = productos.order_by('-fecha_creacion')
+    
+    # Obtener lista de materiales únicos para el filtro
+    materiales_unicos = Producto.objects.filter(
+        categoria__tipo='accesorio',
+        activo=True,
+        material__isnull=False
+    ).exclude(material='').values_list('material', flat=True).distinct()
+    
+    context = {
+        'productos': productos,
+        'categorias': get_categorias(),
+        'categorias_accesorios': categorias_accesorios,
+        'materiales': materiales_unicos,
+        'categoria_seleccionada': categoria_id,
+        'material_seleccionado': material,
+    }
+    
+    return render(request, 'tienda/accesorios.html', context)

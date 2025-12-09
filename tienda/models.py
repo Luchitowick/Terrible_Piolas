@@ -44,13 +44,63 @@ class Producto(models.Model):
         help_text="Solo para pantalones/shorts"
     )
     
-    # Campos específicos para accesorios (no usan tallas)
-    material = models.CharField(max_length=100, blank=True, null=True, help_text="Solo para accesorios")
-    dimensiones = models.CharField(max_length=100, blank=True, null=True, help_text="Solo para accesorios")
+    # 🔥 CAMPOS MEJORADOS PARA ACCESORIOS
+    TIPO_ACCESORIO_CHOICES = [
+        ('mochila', 'Mochila'),
+        ('cinturon', 'Cinturón'),
+        ('cartera', 'Cartera'),
+        ('cadena', 'Cadena'),
+        ('gorra', 'Gorra'),
+        ('llavero', 'Llavero'),
+        ('billetera', 'Billetera'),
+        ('riñonera', 'Riñonera'),
+        ('collar', 'Collar'),
+        ('pulsera', 'Pulsera'),
+        ('anillo', 'Anillo'),
+        ('bolso', 'Bolso'),
+        ('otro', 'Otro'),
+    ]
+    
+    tipo_accesorio = models.CharField(
+        max_length=50,
+        choices=TIPO_ACCESORIO_CHOICES,
+        blank=True,
+        null=True,
+        help_text="Tipo específico de accesorio"
+    )
+    
+    material = models.CharField(
+        max_length=100, 
+        blank=True, 
+        null=True, 
+        help_text="Material del accesorio (ej: Cuero sintético, Lona, Acero inoxidable)"
+    )
+    
+    dimensiones = models.CharField(
+        max_length=100, 
+        blank=True, 
+        null=True, 
+        help_text="Dimensiones del accesorio (ej: 30x40cm, Largo ajustable 80-120cm)"
+    )
+    
+    color = models.CharField(
+        max_length=50,
+        blank=True,
+        null=True,
+        help_text="Color principal del accesorio"
+    )
+    
     stock_accesorio = models.IntegerField(
         default=0,
         validators=[MinValueValidator(0)],
         help_text="Stock para accesorios (no tienen tallas)"
+    )
+    
+    # Campo adicional para características especiales
+    caracteristicas = models.TextField(
+        blank=True,
+        null=True,
+        help_text="Características especiales (ej: Resistente al agua, Cierre magnético, Ajustable)"
     )
     
     class Meta:
@@ -95,13 +145,17 @@ class Producto(models.Model):
             mensaje += f"Talla: {talla}\n"
         if self.tipo_pantalon:
             mensaje += f"Tipo: {self.get_tipo_pantalon_display()}\n"
+        if self.tipo_accesorio:
+            mensaje += f"Tipo: {self.get_tipo_accesorio_display()}\n"
+        if self.color:
+            mensaje += f"Color: {self.color}\n"
         
         mensaje += f"\n¿Está disponible?"
         
         import urllib.parse
         mensaje_encoded = urllib.parse.quote(mensaje)
         
-        return f"https://wa.me/56978605581?text={mensaje_encoded}"
+        return f"https://wa.me/56992154182?text={mensaje_encoded}"
 
 
 class StockTalla(models.Model):

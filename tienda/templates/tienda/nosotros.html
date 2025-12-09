@@ -6,6 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Nosotros - TERRIBLE PIOLA</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Antonio:wght@400;600;700&family=Bebas+Neue&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
     <style>
         * {
             margin: 0;
@@ -13,18 +14,19 @@
             box-sizing: border-box;
         }
         body {
-            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-            background: #ebebeb;
+            font-family: 'Inter', sans-serif;
+            background: #ffffff;
             color: #000;
         }
         
         /* Navbar */
         .navbar {
             background: #000;
-            padding: 20px 0;
+            padding: 18px 0;
             position: sticky;
             top: 0;
             z-index: 1000;
+            border-bottom: 2px solid #FFD700;
         }
         .nav-container {
             max-width: 1400px;
@@ -35,15 +37,22 @@
             align-items: center;
         }
         .logo {
+            font-family: 'Antonio', sans-serif;
             font-size: 22px;
             font-weight: 700;
             color: #fff;
             text-decoration: none;
-            letter-spacing: 0.5px;
+            letter-spacing: 1.5px;
+            text-transform: uppercase;
+            transition: all 0.3s;
+        }
+        .logo:hover {
+            color: #FFD700;
+            text-shadow: 0 0 10px rgba(255, 215, 0, 0.5);
         }
         .nav-menu {
             display: flex;
-            gap: 35px;
+            gap: 40px;
             align-items: center;
             list-style: none;
         }
@@ -51,190 +60,376 @@
             color: #fff;
             text-decoration: none;
             font-size: 14px;
-            font-weight: 500;
-            transition: opacity 0.3s;
+            font-weight: 600;
+            transition: all 0.3s;
+            padding: 8px 0;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            position: relative;
+        }
+        .nav-link::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: #FFD700;
+            transition: width 0.3s;
+        }
+        .nav-link:hover::after {
+            width: 100%;
         }
         .nav-link:hover {
-            opacity: 0.7;
+            color: #FFD700;
         }
-        
-        /* Dropdown */
         .dropdown {
             position: relative;
         }
         .dropdown-content {
             display: none;
             position: absolute;
-            background: #000;
-            min-width: 180px;
+            background: #1a1a1a;
+            min-width: 200px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.3);
             top: 100%;
-            left: 0;
-            margin-top: 10px;
+            left: 50%;
+            transform: translateX(-50%);
+            margin-top: 8px;
+            border-top: 2px solid #FFD700;
         }
         .dropdown:hover .dropdown-content {
             display: block;
         }
         .dropdown-item {
             display: block;
-            padding: 12px 20px;
+            padding: 12px 18px;
             color: #fff;
             text-decoration: none;
             font-size: 13px;
-            transition: opacity 0.3s;
+            transition: all 0.3s;
+            border-bottom: 1px solid #333;
+            position: relative;
+        }
+        .dropdown-item:last-child {
+            border-bottom: none;
+        }
+        .dropdown-item::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 0;
+            width: 0;
+            height: 100%;
+            background: rgba(255, 215, 0, 0.1);
+            transition: width 0.3s;
+        }
+        .dropdown-item:hover::before {
+            width: 4px;
+            background: #FFD700;
         }
         .dropdown-item:hover {
-            opacity: 0.7;
+            background: #252525;
+            padding-left: 22px;
+            color: #FFD700;
+        }
+        .nav-icons {
+            display: flex;
+            gap: 18px;
+        }
+        .nav-icon {
+            color: #fff;
+            font-size: 18px;
+            transition: all 0.3s;
+        }
+        .nav-icon:hover {
+            color: #FFD700;
+            transform: scale(1.1);
         }
         
-        /* Hero Section */
+        /* Hero Section - Minimalista */
         .hero-nosotros {
-            height: 60vh;
-            background: linear-gradient(135deg, #000 0%, #333 100%);
+            height: 50vh;
+            background: #000;
             display: flex;
             align-items: center;
             justify-content: center;
+            position: relative;
+            overflow: hidden;
+        }
+        .hero-nosotros::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(135deg, rgba(255, 215, 0, 0.05) 0%, transparent 50%);
         }
         .hero-content {
             text-align: center;
             color: #fff;
+            position: relative;
+            z-index: 1;
         }
         .hero-content h1 {
-            font-size: 56px;
-            font-weight: 700;
-            margin-bottom: 15px;
-            letter-spacing: 2px;
+            font-family: 'Bebas Neue', sans-serif;
+            font-size: 64px;
+            font-weight: 400;
+            margin-bottom: 12px;
+            letter-spacing: 8px;
+            animation: fadeInUp 0.8s ease;
+        }
+        .hero-content .accent {
+            color: #FFD700;
         }
         .hero-content p {
-            font-size: 20px;
-            letter-spacing: 1px;
-        }
-        
-        /* Content Sections */
-        .container {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 60px 40px;
-        }
-        
-        .section {
-            margin-bottom: 60px;
-        }
-        
-        .section-title {
-            font-size: 32px;
-            font-weight: 600;
-            margin-bottom: 25px;
-            text-align: center;
-        }
-        
-        .section-text {
             font-size: 16px;
-            line-height: 1.8;
-            color: #555;
-            text-align: center;
-            max-width: 800px;
-            margin: 0 auto 30px;
+            letter-spacing: 3px;
+            text-transform: uppercase;
+            font-weight: 400;
+            opacity: 0.9;
+            animation: fadeInUp 1s ease;
         }
         
-        /* Values Grid */
-        .values-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 30px;
-            margin-top: 40px;
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
         }
-        .value-card {
-            padding: 35px 25px;
+        
+        /* Container */
+        .container {
+            max-width: 1100px;
+            margin: 0 auto;
+            padding: 90px 40px;
+        }
+        
+        /* Sección Historia - Destacada */
+        .historia-section {
             text-align: center;
-            border: 1px solid #d0d0d0;
+            margin-bottom: 100px;
+        }
+        .section-tag {
+            font-family: 'Antonio', sans-serif;
+            font-size: 12px;
+            letter-spacing: 3px;
+            text-transform: uppercase;
+            color: #FFD700;
+            margin-bottom: 20px;
+            font-weight: 600;
+        }
+        .section-title {
+            font-family: 'Bebas Neue', sans-serif;
+            font-size: 42px;
+            font-weight: 400;
+            margin-bottom: 35px;
+            letter-spacing: 4px;
+            color: #0a0a0a;
+            position: relative;
+            display: inline-block;
+        }
+        .section-title::after {
+            content: '';
+            position: absolute;
+            bottom: -12px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 40px;
+            height: 2px;
+            background: #FFD700;
+        }
+        .historia-text {
+            font-size: 17px;
+            line-height: 1.9;
+            color: #333;
+            max-width: 750px;
+            margin: 0 auto 25px;
+            font-weight: 400;
+        }
+        .highlight-box {
+            background: #fafafa;
+            border-left: 3px solid #FFD700;
+            padding: 30px 40px;
+            margin: 50px auto;
+            max-width: 650px;
+            text-align: left;
+        }
+        .highlight-box p {
+            font-size: 18px;
+            line-height: 1.7;
+            color: #1a1a1a;
+            font-weight: 500;
+            font-style: italic;
+        }
+        
+        /* Valores Grid - Minimalista */
+        .valores-section {
+            margin-bottom: 90px;
+        }
+        .valores-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+            gap: 40px;
+            margin-top: 50px;
+        }
+        .valor-card {
+            text-align: center;
+            padding: 40px 20px;
             transition: all 0.3s;
+            border: 1px solid transparent;
         }
-        .value-card:hover {
-            border-color: #000;
+        .valor-card:hover {
+            border-color: #FFD700;
+            background: #fafafa;
         }
-        .value-icon {
-            font-size: 40px;
-            color: #000;
+        .valor-icon {
+            font-size: 38px;
+            color: #FFD700;
             margin-bottom: 20px;
         }
-        .value-title {
+        .valor-title {
+            font-family: 'Antonio', sans-serif;
             font-size: 18px;
             font-weight: 600;
             margin-bottom: 12px;
             color: #000;
+            letter-spacing: 2px;
+            text-transform: uppercase;
         }
-        .value-text {
+        .valor-text {
             font-size: 14px;
-            line-height: 1.6;
+            line-height: 1.7;
             color: #666;
         }
         
-        /* Team Section */
-        .team-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-            gap: 40px;
-            margin-top: 40px;
-        }
-        .team-member {
+        /* Marcas Section */
+        .marcas-section {
+            background: #fafafa;
+            padding: 70px 40px;
+            margin: 0 -40px 90px;
             text-align: center;
         }
-        .team-photo {
-            width: 150px;
-            height: 150px;
+        .marcas-grid {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 50px;
+            flex-wrap: wrap;
+            margin-top: 40px;
+        }
+        .marca-item {
+            font-family: 'Antonio', sans-serif;
+            font-size: 28px;
+            font-weight: 600;
+            color: #1a1a1a;
+            letter-spacing: 3px;
+            text-transform: uppercase;
+            transition: all 0.3s;
+        }
+        .marca-item:hover {
+            color: #FFD700;
+            transform: scale(1.05);
+        }
+        
+        /* Fundador Section */
+        .fundador-section {
+            display: flex;
+            align-items: center;
+            gap: 60px;
+            margin-bottom: 90px;
+            max-width: 900px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+        .fundador-photo {
+            width: 200px;
+            height: 200px;
             border-radius: 50%;
-            background: #000;
-            margin: 0 auto 20px;
+            background: linear-gradient(135deg, #000 0%, #333 100%);
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 48px;
-            color: #fff;
-            font-weight: 600;
+            font-family: 'Bebas Neue', sans-serif;
+            font-size: 56px;
+            color: #FFD700;
+            flex-shrink: 0;
+            border: 3px solid #FFD700;
         }
-        .team-name {
-            font-size: 18px;
-            font-weight: 600;
+        .fundador-info {
+            flex: 1;
+        }
+        .fundador-info h3 {
+            font-family: 'Bebas Neue', sans-serif;
+            font-size: 32px;
             margin-bottom: 8px;
-            color: #000;
+            letter-spacing: 2px;
         }
-        .team-role {
-            font-size: 13px;
-            color: #666;
+        .fundador-info .role {
+            font-family: 'Antonio', sans-serif;
+            font-size: 14px;
+            color: #FFD700;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            margin-bottom: 20px;
+        }
+        .fundador-info p {
+            font-size: 15px;
+            line-height: 1.8;
+            color: #555;
         }
         
         /* CTA Section */
         .cta-section {
             background: #000;
-            padding: 60px 40px;
+            padding: 70px 40px;
             text-align: center;
-            margin-top: 60px;
+            margin: 0 -40px;
         }
         .cta-title {
-            font-size: 32px;
-            font-weight: 600;
-            margin-bottom: 25px;
+            font-family: 'Bebas Neue', sans-serif;
+            font-size: 38px;
+            font-weight: 400;
+            margin-bottom: 15px;
             color: #fff;
+            letter-spacing: 4px;
+        }
+        .cta-subtitle {
+            font-size: 15px;
+            color: #999;
+            margin-bottom: 30px;
+            letter-spacing: 2px;
+            text-transform: uppercase;
         }
         .btn-cta {
             display: inline-block;
-            padding: 15px 40px;
-            background: #fff;
+            padding: 16px 50px;
+            background: #FFD700;
             color: #000;
             text-decoration: none;
-            font-size: 14px;
-            font-weight: 600;
+            font-size: 13px;
+            font-weight: 700;
+            letter-spacing: 2px;
+            text-transform: uppercase;
             transition: all 0.3s;
+            font-family: 'Antonio', sans-serif;
         }
         .btn-cta:hover {
-            background: #ebebeb;
+            background: #fff;
+            transform: translateY(-3px);
+            box-shadow: 0 10px 25px rgba(255, 215, 0, 0.3);
         }
         
         /* Footer */
         .footer {
             background: #000;
             color: #fff;
-            padding: 40px 30px;
+            padding: 50px 30px 30px;
             text-align: center;
         }
         .footer-social {
@@ -244,27 +439,56 @@
             margin-bottom: 25px;
         }
         .footer-social a {
-            color: #fff;
+            color: #FFD700;
             font-size: 22px;
-            transition: opacity 0.3s;
+            transition: all 0.3s;
         }
         .footer-social a:hover {
-            opacity: 0.7;
+            color: #fff;
+            transform: scale(1.2);
         }
         .footer-text {
             font-size: 13px;
-            color: #999;
+            color: #666;
         }
         
+        /* Responsive */
         @media (max-width: 768px) {
-            .hero-content h1 {
-                font-size: 36px;
-            }
-            .section-title {
-                font-size: 26px;
-            }
             .nav-menu {
                 display: none;
+            }
+            .hero-content h1 {
+                font-size: 42px;
+                letter-spacing: 4px;
+            }
+            .container {
+                padding: 60px 25px;
+            }
+            .section-title {
+                font-size: 32px;
+            }
+            .historia-text {
+                font-size: 15px;
+            }
+            .fundador-section {
+                flex-direction: column;
+                text-align: center;
+                gap: 30px;
+            }
+            .fundador-photo {
+                width: 160px;
+                height: 160px;
+                font-size: 48px;
+            }
+            .valores-grid {
+                grid-template-columns: 1fr;
+                gap: 30px;
+            }
+            .marcas-grid {
+                gap: 30px;
+            }
+            .marca-item {
+                font-size: 22px;
             }
         }
     </style>
@@ -289,121 +513,135 @@
                     </div>
                 </li>
                 
-                <li class="dropdown">
-                    <a href="#" class="nav-link">Accesorios</a>
-                    <div class="dropdown-content">
-                        {% for cat in categorias %}
-                        {% if cat.tipo == 'accesorio' %}
-                        <a href="{% url 'tienda:categoria_detalle' cat.id %}" class="dropdown-item">{{ cat.nombre }}</a>
-                        {% endif %}
-                        {% endfor %}
-                    </div>
-                </li>
-                
+                <li><a href="{% url 'tienda:accesorios' %}" class="nav-link">Accesorios</a></li>
                 <li><a href="{% url 'tienda:nosotros' %}" class="nav-link">Nosotros</a></li>
             </ul>
+            
+            <div class="nav-icons">
+                <a href="https://www.instagram.com/terriblepiolas.cl/" class="nav-icon"><i class="fab fa-instagram"></i></a>
+                <a href="#" class="nav-icon"><i class="fab fa-facebook"></i></a>
+            </div>
         </div>
     </nav>
     
     <!-- Hero Section -->
     <section class="hero-nosotros">
         <div class="hero-content">
-            <h1>Nuestra Historia</h1>
-            <p>Estilo urbano, calidad premium</p>
+            <h1>CONOCE <span class="accent">NUESTRA HISTORIA</span></h1>
+            <p>Desde Chile para el mundo</p>
         </div>
     </section>
     
-    <!-- About Section -->
+    <!-- Historia Section -->
     <div class="container">
-        <div class="section">
-            <h2 class="section-title">¿Quiénes Somos?</h2>
-            <p class="section-text">
-                Somos una marca de ropa urbana nacida en el corazón de la ciudad, con la misión de revolucionar 
-                el streetwear latinoamericano. Desde 2020, hemos estado creando piezas únicas que combinan 
-                diseño audaz, calidad excepcional y precios accesibles. Cada prenda cuenta una historia, 
-                cada diseño es una declaración de estilo.
+        <div class="historia-section">
+            <div class="section-tag">● QUIÉNES SOMOS</div>
+            <h2 class="section-title">LA HISTORIA DE TERRIBLE PIOLA</h2>
+            
+            <p class="historia-text">
+                Todo comenzó en <strong>2024</strong>, cuando un emprendedor chileno decidió traer a su país las marcas 
+                más exclusivas y codiciadas del streetwear internacional. Lo que empezó como una pasión por la moda 
+                urbana se transformó en <strong>Terrible Piola</strong>, un proyecto independiente que conecta a Chile 
+                con las tendencias globales.
             </p>
-            <p class="section-text">
-                Creemos que la moda debe ser inclusiva, auténtica y accesible para todos. Por eso trabajamos 
-                con los mejores materiales y proveedores locales, asegurando que cada pieza que sale de nuestro 
-                taller sea perfecta. No somos solo una marca, somos una comunidad de personas que comparten 
-                la pasión por el estilo único.
+            
+            <p class="historia-text">
+                Nuestro catálogo incluye piezas de <strong>marcas premium como Guess, Tommy Hilfiger y Michael Kors</strong>, 
+                seleccionadas cuidadosamente para ofrecer lo mejor del mercado. No somos una tienda más: somos el puente 
+                entre el estilo internacional y la calle chilena, trayendo exclusividad, calidad y actitud a cada prenda.
+            </p>
+            
+            <div class="highlight-box">
+                <p>
+                    "¿Qué esperas para cambiar tu estilo? Full tendencias con nosotros. Desde Santiago, 
+                    llevamos lo mejor del mundo directo a tu closet."
+                </p>
+            </div>
+            
+            <p class="historia-text">
+                Como emprendimiento <strong>100% independiente</strong>, cada pedido es una muestra de confianza y 
+                cada cliente forma parte de esta comunidad que crece día a día. Trabajamos con dedicación para 
+                que encuentres esas piezas únicas que te hacen destacar, con atención personalizada y 
+                envíos a todo Chile.
             </p>
         </div>
         
-        <!-- Values Section -->
-        <div class="section">
-            <h2 class="section-title">Nuestros Valores</h2>
-            <div class="values-grid">
-                <div class="value-card">
-                    <div class="value-icon"><i class="fas fa-star"></i></div>
-                    <div class="value-title">Calidad</div>
-                    <div class="value-text">
-                        Solo trabajamos con los mejores materiales y procesos de fabricación para garantizar 
-                        que cada prenda dure años.
+        <!-- Valores -->
+        <div class="valores-section">
+            <div style="text-align: center;">
+                <div class="section-tag">● NUESTROS VALORES</div>
+                <h2 class="section-title">LO QUE NOS DEFINE</h2>
+            </div>
+            
+            <div class="valores-grid">
+                <div class="valor-card">
+                    <div class="valor-icon"><i class="fas fa-gem"></i></div>
+                    <div class="valor-title">Exclusividad</div>
+                    <div class="valor-text">
+                        Traemos marcas premium que no encuentras en cualquier tienda. Cada pieza es seleccionada 
+                        para garantizar que tu estilo sea único.
                     </div>
                 </div>
                 
-                <div class="value-card">
-                    <div class="value-icon"><i class="fas fa-heart"></i></div>
-                    <div class="value-title">Pasión</div>
-                    <div class="value-text">
-                        Amamos lo que hacemos. Cada diseño nace de la creatividad y el amor por la moda urbana.
+                <div class="valor-card">
+                    <div class="valor-icon"><i class="fas fa-star"></i></div>
+                    <div class="valor-title">Calidad</div>
+                    <div class="valor-text">
+                        Solo trabajamos con marcas reconocidas mundialmente. Calidad garantizada en cada prenda, 
+                        porque mereces lo mejor.
                     </div>
                 </div>
                 
-                <div class="value-card">
-                    <div class="value-icon"><i class="fas fa-users"></i></div>
-                    <div class="value-title">Comunidad</div>
-                    <div class="value-text">
-                        Nuestros clientes son parte de nuestra familia. Escuchamos, aprendemos y crecemos juntos.
-                    </div>
-                </div>
-                
-                <div class="value-card">
-                    <div class="value-icon"><i class="fas fa-bolt"></i></div>
-                    <div class="value-title">Innovación</div>
-                    <div class="value-text">
-                        Siempre estamos buscando nuevas formas de sorprender con diseños frescos y atrevidos.
+                <div class="valor-card">
+                    <div class="valor-icon"><i class="fas fa-fire"></i></div>
+                    <div class="valor-title">Tendencias</div>
+                    <div class="valor-text">
+                        Estamos siempre al día con lo último en moda urbana. Si está de moda en el mundo, 
+                        lo traemos para ti.
                     </div>
                 </div>
             </div>
         </div>
         
-        <!-- Team Section -->
-        <div class="section">
-            <h2 class="section-title">Nuestro Equipo</h2>
-            <div class="team-grid">
-                <div class="team-member">
-                    <div class="team-photo">JD</div>
-                    <div class="team-name">Juan Díaz</div>
-                    <div class="team-role">Fundador & Director Creativo</div>
-                </div>
-                
-                <div class="team-member">
-                    <div class="team-photo">MC</div>
-                    <div class="team-name">María Castro</div>
-                    <div class="team-role">Diseñadora de Producto</div>
-                </div>
-                
-                <div class="team-member">
-                    <div class="team-photo">PR</div>
-                    <div class="team-name">Pablo Rojas</div>
-                    <div class="team-role">Gerente de Operaciones</div>
-                </div>
-                
-                <div class="team-member">
-                    <div class="team-photo">LS</div>
-                    <div class="team-name">Laura Silva</div>
-                    <div class="team-role">Social Media Manager</div>
-                </div>
+        <!-- Marcas -->
+        <div class="marcas-section">
+            <div class="section-tag">● NUESTRAS MARCAS</div>
+            <h2 class="section-title">TRABAJAMOS CON LOS MEJORES</h2>
+            
+            <div class="marcas-grid">
+                <div class="marca-item">GUESS</div>
+                <div class="marca-item">TOMMY HILFIGER</div>
+                <div class="marca-item">MICHAEL KORS</div>
+            </div>
+        </div>
+        
+        <!-- Fundador -->
+        <div style="text-align: center; margin-bottom: 50px;">
+            <div class="section-tag">● EL EQUIPO</div>
+            <h2 class="section-title">DETRÁS DE LA MARCA</h2>
+        </div>
+        
+        <div class="fundador-section">
+            <div class="fundador-photo">MM</div>
+            <div class="fundador-info">
+                <h3>Matías Muñoz</h3>
+                <div class="role">Fundador & Curador de Estilo</div>
+                <p>
+                    Emprendedor chileno apasionado por la moda urbana y las tendencias globales. 
+                    Desde 2024, trabaja incansablemente para traer las mejores marcas internacionales 
+                    a Chile, construyendo <strong>Terrible Piola</strong> como un referente de exclusividad 
+                    y estilo. Con ojo para detectar las últimas tendencias y compromiso con la calidad, 
+                    Matías selecciona personalmente cada pieza del catálogo para asegurar que cada 
+                    cliente encuentre algo especial.
+                </p>
             </div>
         </div>
     </div>
     
     <!-- CTA Section -->
     <section class="cta-section">
-        <h2 class="cta-title">Únete a Nuestra Comunidad</h2>
+        <h2 class="cta-title">¿LISTO PARA CAMBIAR TU ESTILO?</h2>
+        <p class="cta-subtitle">Descubre nuestras colecciones exclusivas</p>
         <a href="{% url 'tienda:home' %}" class="btn-cta">Ver Catálogo</a>
     </section>
     
@@ -411,9 +649,8 @@
     <footer class="footer">
         <div class="footer-social">
             <a href="#"><i class="fab fa-facebook"></i></a>
-            <a href="#"><i class="fab fa-instagram"></i></a>
+            <a href="https://www.instagram.com/terriblepiolas.cl/"><i class="fab fa-instagram"></i></a>
             <a href="#"><i class="fab fa-twitter"></i></a>
-            <a href="#"><i class="fab fa-tiktok"></i></a>
         </div>
         <p class="footer-text">© 2025 TERRIBLE PIOLA. Todos los derechos reservados.</p>
     </footer>
