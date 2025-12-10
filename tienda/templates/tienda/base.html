@@ -38,22 +38,17 @@
             justify-content: space-between;
             align-items: center;
         }
-        .logo {
-            font-family: 'Antonio', sans-serif;
-            font-size: 22px;
-            font-weight: 700;
-            color: #fff;
-            text-decoration: none;
-            letter-spacing: 1.5px;
-            text-transform: uppercase;
-            transition: all 0.3s;
+        .logo-text {
+            font-family: 'Luckiest Guy', sans-serif; /* Cartoon style */
+            font-size: 36px;
+            font-weight: bold;
+            color: #FFD200; /* Amarillo tipo Simpsons */
+            text-shadow: 3px 3px 0 #000; /* Contorno negro grueso */
+            letter-spacing: 2px;
         }
+
         
-        /* 🎨 LOGO CON EFECTO AMARILLO AL HOVER */
-        .logo:hover {
-            color: #FFD700;
-            text-shadow: 0 0 10px rgba(255, 215, 0, 0.5);
-        }
+
         
         /* Desktop Menu */
         .nav-menu {
@@ -314,15 +309,19 @@
                 padding: 0 20px;
             }
 
-            .logo-img {
-                height: 60px; 
-                width: auto;
-                object-fit: contain;
+            .logo-text {
+                font-family: 'Luckiest Guy', sans-serif; /* Cartoon style */
+                font-size: 25px;
+                font-weight: bold;
+                color: #FFD200; /* Amarillo tipo Simpsons */
+                text-shadow: 2px 2px 0 #000; /* Contorno negro grueso */
+                letter-spacing: 2px;
             }
         }
     </style>
     {% block extra_css %}{% endblock %}
 </head>
+<link href="https://fonts.googleapis.com/css2?family=Luckiest+Guy&display=swap" rel="stylesheet">
 <body>
     <!-- Navbar -->
     <nav class="navbar">
@@ -332,7 +331,7 @@
                 <i class="fas fa-bars"></i>
             </button>
             <a href="{% url 'tienda:home' %}" class="logo">
-                <img src="{% static 'img/logo.pn' %}" alt="Terrible Piola" class="logo-img">
+                <span class="logo-text">TERRIBLEPIOLAS</span>
             </a>
 
             <!-- Desktop Menu -->
