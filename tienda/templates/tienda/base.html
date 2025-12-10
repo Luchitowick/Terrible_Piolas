@@ -8,6 +8,7 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <!-- Fuentes streetwear -->
     <link href="https://fonts.googleapis.com/css2?family=Antonio:wght@400;500;600;700&family=Russo+One&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Luckiest+Guy&display=swap" rel="stylesheet">
     <style>
         * {
             margin: 0;
@@ -38,6 +39,11 @@
             justify-content: space-between;
             align-items: center;
         }
+        
+        .logo {
+            text-decoration: none !important; /* 🎨 ELIMINA LA LÍNEA DEL ENLACE */
+        }
+        
         .logo-text {
             font-family: 'Luckiest Guy', sans-serif; /* Cartoon style */
             font-size: 36px;
@@ -45,6 +51,7 @@
             color: #FFD200; /* Amarillo tipo Simpsons */
             text-shadow: 3px 3px 0 #000; /* Contorno negro grueso */
             letter-spacing: 2px;
+            text-decoration: none !important; /* 🎨 DOBLE SEGURIDAD - SIN LÍNEA */
         }
 
         
@@ -316,12 +323,12 @@
                 color: #FFD200; /* Amarillo tipo Simpsons */
                 text-shadow: 2px 2px 0 #000; /* Contorno negro grueso */
                 letter-spacing: 2px;
+                text-decoration: none !important; /* 🎨 SIN LÍNEA EN MOBILE */
             }
         }
     </style>
     {% block extra_css %}{% endblock %}
 </head>
-<link href="https://fonts.googleapis.com/css2?family=Luckiest+Guy&display=swap" rel="stylesheet">
 <body>
     <!-- Navbar -->
     <nav class="navbar">
