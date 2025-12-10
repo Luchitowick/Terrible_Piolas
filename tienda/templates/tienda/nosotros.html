@@ -1,658 +1,484 @@
+{% extends 'tienda/base.html' %}
 {% load static %}
-<!DOCTYPE html>
-<html lang="es">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Nosotros - TERRIBLE PIOLA</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <link href="https://fonts.googleapis.com/css2?family=Antonio:wght@400;600;700&family=Bebas+Neue&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
-    <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
+
+{% block title %}Nosotros - TERRIBLEPIOLAS{% endblock %}
+
+{% block extra_css %}
+<style>
+    /* Hero Section - Minimalista */
+    .hero-nosotros {
+        height: 50vh;
+        background: #000;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        position: relative;
+        overflow: hidden;
+    }
+    .hero-nosotros::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background: linear-gradient(135deg, rgba(255, 215, 0, 0.05) 0%, transparent 50%);
+    }
+    .hero-content {
+        text-align: center;
+        color: #fff;
+        position: relative;
+        z-index: 1;
+    }
+    .hero-content h1 {
+        font-family: 'Bebas Neue', sans-serif;
+        font-size: 64px;
+        font-weight: 400;
+        margin-bottom: 12px;
+        letter-spacing: 8px;
+        animation: fadeInUp 0.8s ease;
+    }
+    .hero-content .accent {
+        color: #FFD700;
+    }
+    .hero-content p {
+        font-size: 16px;
+        letter-spacing: 3px;
+        text-transform: uppercase;
+        font-weight: 400;
+        opacity: 0.9;
+        animation: fadeInUp 1s ease;
+    }
+    
+    @keyframes fadeInUp {
+        from {
+            opacity: 0;
+            transform: translateY(30px);
         }
-        body {
-            font-family: 'Inter', sans-serif;
-            background: #ffffff;
-            color: #000;
+        to {
+            opacity: 1;
+            transform: translateY(0);
         }
-        
-        /* Navbar */
-        .navbar {
-            background: #000;
-            padding: 18px 0;
-            position: sticky;
-            top: 0;
-            z-index: 1000;
-            border-bottom: 2px solid #FFD700;
-        }
-        .nav-container {
-            max-width: 1400px;
-            margin: 0 auto;
-            padding: 0 30px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-        .logo {
-            font-family: 'Antonio', sans-serif;
-            font-size: 22px;
-            font-weight: 700;
-            color: #fff;
-            text-decoration: none;
-            letter-spacing: 1.5px;
-            text-transform: uppercase;
-            transition: all 0.3s;
-        }
-        .logo:hover {
-            color: #FFD700;
-            text-shadow: 0 0 10px rgba(255, 215, 0, 0.5);
-        }
-        .nav-menu {
-            display: flex;
-            gap: 40px;
-            align-items: center;
-            list-style: none;
-        }
-        .nav-link {
-            color: #fff;
-            text-decoration: none;
-            font-size: 14px;
-            font-weight: 600;
-            transition: all 0.3s;
-            padding: 8px 0;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-            position: relative;
-        }
-        .nav-link::after {
-            content: '';
-            position: absolute;
-            bottom: 0;
-            left: 0;
-            width: 0;
-            height: 2px;
-            background: #FFD700;
-            transition: width 0.3s;
-        }
-        .nav-link:hover::after {
-            width: 100%;
-        }
-        .nav-link:hover {
-            color: #FFD700;
-        }
-        .dropdown {
-            position: relative;
-        }
-        .dropdown-content {
-            display: none;
-            position: absolute;
-            background: #1a1a1a;
-            min-width: 200px;
-            box-shadow: 0 4px 12px rgba(0,0,0,0.3);
-            top: 100%;
-            left: 50%;
-            transform: translateX(-50%);
-            margin-top: 8px;
-            border-top: 2px solid #FFD700;
-        }
-        .dropdown:hover .dropdown-content {
-            display: block;
-        }
-        .dropdown-item {
-            display: block;
-            padding: 12px 18px;
-            color: #fff;
-            text-decoration: none;
-            font-size: 13px;
-            transition: all 0.3s;
-            border-bottom: 1px solid #333;
-            position: relative;
-        }
-        .dropdown-item:last-child {
-            border-bottom: none;
-        }
-        .dropdown-item::before {
-            content: '';
-            position: absolute;
-            left: 0;
-            top: 0;
-            width: 0;
-            height: 100%;
-            background: rgba(255, 215, 0, 0.1);
-            transition: width 0.3s;
-        }
-        .dropdown-item:hover::before {
-            width: 4px;
-            background: #FFD700;
-        }
-        .dropdown-item:hover {
-            background: #252525;
-            padding-left: 22px;
-            color: #FFD700;
-        }
-        .nav-icons {
-            display: flex;
-            gap: 18px;
-        }
-        .nav-icon {
-            color: #fff;
-            font-size: 18px;
-            transition: all 0.3s;
-        }
-        .nav-icon:hover {
-            color: #FFD700;
-            transform: scale(1.1);
-        }
-        
-        /* Hero Section - Minimalista */
-        .hero-nosotros {
-            height: 50vh;
-            background: #000;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            position: relative;
-            overflow: hidden;
-        }
-        .hero-nosotros::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background: linear-gradient(135deg, rgba(255, 215, 0, 0.05) 0%, transparent 50%);
-        }
-        .hero-content {
-            text-align: center;
-            color: #fff;
-            position: relative;
-            z-index: 1;
-        }
+    }
+    
+    /* Container */
+    .container {
+        max-width: 1100px;
+        margin: 0 auto;
+        padding: 90px 40px;
+    }
+    
+    /* Sección Historia - Destacada */
+    .historia-section {
+        text-align: center;
+        margin-bottom: 100px;
+    }
+    .section-tag {
+        font-family: 'Antonio', sans-serif;
+        font-size: 12px;
+        letter-spacing: 3px;
+        text-transform: uppercase;
+        color: #FFD700;
+        margin-bottom: 20px;
+        font-weight: 600;
+    }
+    .section-title {
+        font-family: 'Bebas Neue', sans-serif;
+        font-size: 42px;
+        font-weight: 400;
+        margin-bottom: 35px;
+        letter-spacing: 4px;
+        color: #0a0a0a;
+        position: relative;
+        display: inline-block;
+    }
+    .section-title::after {
+        content: '';
+        position: absolute;
+        bottom: -12px;
+        left: 50%;
+        transform: translateX(-50%);
+        width: 40px;
+        height: 2px;
+        background: #FFD700;
+    }
+    .historia-text {
+        font-size: 17px;
+        line-height: 1.9;
+        color: #333;
+        max-width: 750px;
+        margin: 0 auto 25px;
+        font-weight: 400;
+    }
+    .highlight-box {
+        background: #fafafa;
+        border-left: 3px solid #FFD700;
+        padding: 30px 40px;
+        margin: 50px auto;
+        max-width: 650px;
+        text-align: left;
+    }
+    .highlight-box p {
+        font-size: 18px;
+        line-height: 1.7;
+        color: #1a1a1a;
+        font-weight: 500;
+        font-style: italic;
+    }
+    
+    /* Valores Grid - Minimalista */
+    .valores-section {
+        margin-bottom: 90px;
+    }
+    .valores-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+        gap: 40px;
+        margin-top: 50px;
+    }
+    .valor-card {
+        text-align: center;
+        padding: 40px 20px;
+        transition: all 0.3s;
+        border: 1px solid transparent;
+    }
+    .valor-card:hover {
+        border-color: #FFD700;
+        background: #fafafa;
+    }
+    .valor-icon {
+        font-size: 38px;
+        color: #FFD700;
+        margin-bottom: 20px;
+    }
+    .valor-title {
+        font-family: 'Antonio', sans-serif;
+        font-size: 18px;
+        font-weight: 600;
+        margin-bottom: 12px;
+        color: #000;
+        letter-spacing: 2px;
+        text-transform: uppercase;
+    }
+    .valor-text {
+        font-size: 14px;
+        line-height: 1.7;
+        color: #666;
+    }
+    
+    /* Marcas Section */
+    .marcas-section {
+        background: #fafafa;
+        padding: 70px 40px;
+        margin: 0 -40px 90px;
+        text-align: center;
+    }
+    .marcas-grid {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        gap: 50px;
+        flex-wrap: wrap;
+        margin-top: 40px;
+    }
+    .marca-item {
+        font-family: 'Antonio', sans-serif;
+        font-size: 28px;
+        font-weight: 600;
+        color: #1a1a1a;
+        letter-spacing: 3px;
+        text-transform: uppercase;
+        transition: all 0.3s;
+    }
+    .marca-item:hover {
+        color: #FFD700;
+        transform: scale(1.05);
+    }
+    
+    /* Fundador Section */
+    .fundador-section {
+        display: flex;
+        align-items: center;
+        gap: 60px;
+        margin-bottom: 90px;
+        max-width: 900px;
+        margin-left: auto;
+        margin-right: auto;
+    }
+    .fundador-photo {
+        width: 200px;
+        height: 200px;
+        border-radius: 50%;
+        background: linear-gradient(135deg, #000 0%, #333 100%);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-family: 'Bebas Neue', sans-serif;
+        font-size: 56px;
+        color: #FFD700;
+        flex-shrink: 0;
+        border: 3px solid #FFD700;
+    }
+    .fundador-info {
+        flex: 1;
+    }
+    .fundador-info h3 {
+        font-family: 'Bebas Neue', sans-serif;
+        font-size: 32px;
+        margin-bottom: 8px;
+        letter-spacing: 2px;
+    }
+    .fundador-info .role {
+        font-family: 'Antonio', sans-serif;
+        font-size: 14px;
+        color: #FFD700;
+        text-transform: uppercase;
+        letter-spacing: 2px;
+        margin-bottom: 20px;
+    }
+    .fundador-info p {
+        font-size: 15px;
+        line-height: 1.8;
+        color: #555;
+    }
+    
+    /* CTA Section */
+    .cta-section {
+        background: #000;
+        padding: 70px 40px;
+        text-align: center;
+        margin: 0 -40px;
+    }
+    .cta-title {
+        font-family: 'Bebas Neue', sans-serif;
+        font-size: 38px;
+        font-weight: 400;
+        margin-bottom: 15px;
+        color: #fff;
+        letter-spacing: 4px;
+    }
+    .cta-subtitle {
+        font-size: 15px;
+        color: #999;
+        margin-bottom: 30px;
+        letter-spacing: 2px;
+        text-transform: uppercase;
+    }
+    .btn-cta {
+        display: inline-block;
+        padding: 16px 50px;
+        background: #FFD700;
+        color: #000;
+        text-decoration: none;
+        font-size: 13px;
+        font-weight: 700;
+        letter-spacing: 2px;
+        text-transform: uppercase;
+        transition: all 0.3s;
+        font-family: 'Antonio', sans-serif;
+    }
+    .btn-cta:hover {
+        background: #fff;
+        transform: translateY(-3px);
+        box-shadow: 0 10px 25px rgba(255, 215, 0, 0.3);
+    }
+    
+    /* Footer */
+    .footer {
+        background: #000;
+        color: #fff;
+        padding: 50px 30px 30px;
+        text-align: center;
+    }
+    .footer-social {
+        display: flex;
+        justify-content: center;
+        gap: 25px;
+        margin-bottom: 25px;
+    }
+    .footer-social a {
+        color: #FFD700;
+        font-size: 22px;
+        transition: all 0.3s;
+    }
+    .footer-social a:hover {
+        color: #fff;
+        transform: scale(1.2);
+    }
+    .footer-text {
+        font-size: 13px;
+        color: #666;
+    }
+    
+    /* Responsive */
+    @media (max-width: 768px) {
         .hero-content h1 {
-            font-family: 'Bebas Neue', sans-serif;
-            font-size: 64px;
-            font-weight: 400;
-            margin-bottom: 12px;
-            letter-spacing: 8px;
-            animation: fadeInUp 0.8s ease;
+            font-size: 42px;
+            letter-spacing: 4px;
         }
-        .hero-content .accent {
-            color: #FFD700;
-        }
-        .hero-content p {
-            font-size: 16px;
-            letter-spacing: 3px;
-            text-transform: uppercase;
-            font-weight: 400;
-            opacity: 0.9;
-            animation: fadeInUp 1s ease;
-        }
-        
-        @keyframes fadeInUp {
-            from {
-                opacity: 0;
-                transform: translateY(30px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
-        
-        /* Container */
         .container {
-            max-width: 1100px;
-            margin: 0 auto;
-            padding: 90px 40px;
-        }
-        
-        /* Sección Historia - Destacada */
-        .historia-section {
-            text-align: center;
-            margin-bottom: 100px;
-        }
-        .section-tag {
-            font-family: 'Antonio', sans-serif;
-            font-size: 12px;
-            letter-spacing: 3px;
-            text-transform: uppercase;
-            color: #FFD700;
-            margin-bottom: 20px;
-            font-weight: 600;
+            padding: 60px 25px;
         }
         .section-title {
-            font-family: 'Bebas Neue', sans-serif;
-            font-size: 42px;
-            font-weight: 400;
-            margin-bottom: 35px;
-            letter-spacing: 4px;
-            color: #0a0a0a;
-            position: relative;
-            display: inline-block;
-        }
-        .section-title::after {
-            content: '';
-            position: absolute;
-            bottom: -12px;
-            left: 50%;
-            transform: translateX(-50%);
-            width: 40px;
-            height: 2px;
-            background: #FFD700;
+            font-size: 32px;
         }
         .historia-text {
-            font-size: 17px;
-            line-height: 1.9;
-            color: #333;
-            max-width: 750px;
-            margin: 0 auto 25px;
-            font-weight: 400;
+            font-size: 15px;
         }
-        .highlight-box {
-            background: #fafafa;
-            border-left: 3px solid #FFD700;
-            padding: 30px 40px;
-            margin: 50px auto;
-            max-width: 650px;
-            text-align: left;
-        }
-        .highlight-box p {
-            font-size: 18px;
-            line-height: 1.7;
-            color: #1a1a1a;
-            font-weight: 500;
-            font-style: italic;
-        }
-        
-        /* Valores Grid - Minimalista */
-        .valores-section {
-            margin-bottom: 90px;
-        }
-        .valores-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
-            gap: 40px;
-            margin-top: 50px;
-        }
-        .valor-card {
-            text-align: center;
-            padding: 40px 20px;
-            transition: all 0.3s;
-            border: 1px solid transparent;
-        }
-        .valor-card:hover {
-            border-color: #FFD700;
-            background: #fafafa;
-        }
-        .valor-icon {
-            font-size: 38px;
-            color: #FFD700;
-            margin-bottom: 20px;
-        }
-        .valor-title {
-            font-family: 'Antonio', sans-serif;
-            font-size: 18px;
-            font-weight: 600;
-            margin-bottom: 12px;
-            color: #000;
-            letter-spacing: 2px;
-            text-transform: uppercase;
-        }
-        .valor-text {
-            font-size: 14px;
-            line-height: 1.7;
-            color: #666;
-        }
-        
-        /* Marcas Section */
-        .marcas-section {
-            background: #fafafa;
-            padding: 70px 40px;
-            margin: 0 -40px 90px;
-            text-align: center;
-        }
-        .marcas-grid {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            gap: 50px;
-            flex-wrap: wrap;
-            margin-top: 40px;
-        }
-        .marca-item {
-            font-family: 'Antonio', sans-serif;
-            font-size: 28px;
-            font-weight: 600;
-            color: #1a1a1a;
-            letter-spacing: 3px;
-            text-transform: uppercase;
-            transition: all 0.3s;
-        }
-        .marca-item:hover {
-            color: #FFD700;
-            transform: scale(1.05);
-        }
-        
-        /* Fundador Section */
         .fundador-section {
-            display: flex;
-            align-items: center;
-            gap: 60px;
-            margin-bottom: 90px;
-            max-width: 900px;
-            margin-left: auto;
-            margin-right: auto;
+            flex-direction: column;
+            text-align: center;
+            gap: 30px;
         }
         .fundador-photo {
-            width: 200px;
-            height: 200px;
-            border-radius: 50%;
-            background: linear-gradient(135deg, #000 0%, #333 100%);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-family: 'Bebas Neue', sans-serif;
-            font-size: 56px;
-            color: #FFD700;
-            flex-shrink: 0;
-            border: 3px solid #FFD700;
+            width: 160px;
+            height: 160px;
+            font-size: 48px;
         }
-        .fundador-info {
-            flex: 1;
+        .valores-grid {
+            grid-template-columns: 1fr;
+            gap: 30px;
         }
-        .fundador-info h3 {
-            font-family: 'Bebas Neue', sans-serif;
-            font-size: 32px;
-            margin-bottom: 8px;
-            letter-spacing: 2px;
+        .marcas-grid {
+            gap: 30px;
         }
-        .fundador-info .role {
-            font-family: 'Antonio', sans-serif;
-            font-size: 14px;
-            color: #FFD700;
-            text-transform: uppercase;
-            letter-spacing: 2px;
-            margin-bottom: 20px;
-        }
-        .fundador-info p {
-            font-size: 15px;
-            line-height: 1.8;
-            color: #555;
-        }
-        
-        /* CTA Section */
-        .cta-section {
-            background: #000;
-            padding: 70px 40px;
-            text-align: center;
-            margin: 0 -40px;
-        }
-        .cta-title {
-            font-family: 'Bebas Neue', sans-serif;
-            font-size: 38px;
-            font-weight: 400;
-            margin-bottom: 15px;
-            color: #fff;
-            letter-spacing: 4px;
-        }
-        .cta-subtitle {
-            font-size: 15px;
-            color: #999;
-            margin-bottom: 30px;
-            letter-spacing: 2px;
-            text-transform: uppercase;
-        }
-        .btn-cta {
-            display: inline-block;
-            padding: 16px 50px;
-            background: #FFD700;
-            color: #000;
-            text-decoration: none;
-            font-size: 13px;
-            font-weight: 700;
-            letter-spacing: 2px;
-            text-transform: uppercase;
-            transition: all 0.3s;
-            font-family: 'Antonio', sans-serif;
-        }
-        .btn-cta:hover {
-            background: #fff;
-            transform: translateY(-3px);
-            box-shadow: 0 10px 25px rgba(255, 215, 0, 0.3);
-        }
-        
-        /* Footer */
-        .footer {
-            background: #000;
-            color: #fff;
-            padding: 50px 30px 30px;
-            text-align: center;
-        }
-        .footer-social {
-            display: flex;
-            justify-content: center;
-            gap: 25px;
-            margin-bottom: 25px;
-        }
-        .footer-social a {
-            color: #FFD700;
+        .marca-item {
             font-size: 22px;
-            transition: all 0.3s;
         }
-        .footer-social a:hover {
-            color: #fff;
-            transform: scale(1.2);
-        }
-        .footer-text {
-            font-size: 13px;
-            color: #666;
-        }
+    }
+</style>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Antonio:wght@400;600;700&display=swap" rel="stylesheet">
+{% endblock %}
+
+{% block content %}
+<!-- Hero Section -->
+<section class="hero-nosotros">
+    <div class="hero-content">
+        <h1>CONOCE <span class="accent">NUESTRA HISTORIA</span></h1>
+        <p>Desde Chile para el mundo</p>
+    </div>
+</section>
+
+<!-- Historia Section -->
+<div class="container">
+    <div class="historia-section">
+        <div class="section-tag">● QUIÉNES SOMOS</div>
+        <h2 class="section-title">LA HISTORIA DE TERRIBLE PIOLA</h2>
         
-        /* Responsive */
-        @media (max-width: 768px) {
-            .nav-menu {
-                display: none;
-            }
-            .hero-content h1 {
-                font-size: 42px;
-                letter-spacing: 4px;
-            }
-            .container {
-                padding: 60px 25px;
-            }
-            .section-title {
-                font-size: 32px;
-            }
-            .historia-text {
-                font-size: 15px;
-            }
-            .fundador-section {
-                flex-direction: column;
-                text-align: center;
-                gap: 30px;
-            }
-            .fundador-photo {
-                width: 160px;
-                height: 160px;
-                font-size: 48px;
-            }
-            .valores-grid {
-                grid-template-columns: 1fr;
-                gap: 30px;
-            }
-            .marcas-grid {
-                gap: 30px;
-            }
-            .marca-item {
-                font-size: 22px;
-            }
-        }
-    </style>
-</head>
-<body>
-    <!-- Navbar -->
-    <nav class="navbar">
-        <div class="nav-container">
-            <a href="{% url 'tienda:home' %}" class="logo">TERRIBLE PIOLA</a>
-            
-            <ul class="nav-menu">
-                <li><a href="{% url 'tienda:home' %}" class="nav-link">Inicio</a></li>
-                
-                <li class="dropdown">
-                    <a href="#" class="nav-link">Ropa</a>
-                    <div class="dropdown-content">
-                        {% for cat in categorias %}
-                        {% if cat.tipo in 'polera,pantalon' %}
-                        <a href="{% url 'tienda:categoria_detalle' cat.id %}" class="dropdown-item">{{ cat.nombre }}</a>
-                        {% endif %}
-                        {% endfor %}
-                    </div>
-                </li>
-                
-                <li><a href="{% url 'tienda:accesorios' %}" class="nav-link">Accesorios</a></li>
-                <li><a href="{% url 'tienda:nosotros' %}" class="nav-link">Nosotros</a></li>
-            </ul>
-            
-            <div class="nav-icons">
-                <a href="https://www.instagram.com/terriblepiolas.cl/" class="nav-icon"><i class="fab fa-instagram"></i></a>
-                <a href="#" class="nav-icon"><i class="fab fa-facebook"></i></a>
-            </div>
+        <p class="historia-text">
+            Todo comenzó en <strong>2024</strong>, cuando un emprendedor chileno decidió traer a su país las marcas 
+            más exclusivas y codiciadas del streetwear internacional. Lo que empezó como una pasión por la moda 
+            urbana se transformó en <strong>Terrible Piola</strong>, un proyecto independiente que conecta a Chile 
+            con las tendencias globales.
+        </p>
+        
+        <p class="historia-text">
+            Nuestro catálogo incluye piezas de <strong>marcas premium como Guess, Tommy Hilfiger y Michael Kors</strong>, 
+            seleccionadas cuidadosamente para ofrecer lo mejor del mercado. No somos una tienda más: somos el puente 
+            entre el estilo internacional y la calle chilena, trayendo exclusividad, calidad y actitud a cada prenda.
+        </p>
+        
+        <div class="highlight-box">
+            <p>
+                "¿Qué esperas para cambiar tu estilo? Full tendencias con nosotros. Desde Santiago, 
+                llevamos lo mejor del mundo directo a tu closet."
+            </p>
         </div>
-    </nav>
+        
+        <p class="historia-text">
+            Como emprendimiento <strong>100% independiente</strong>, cada pedido es una muestra de confianza y 
+            cada cliente forma parte de esta comunidad que crece día a día. Trabajamos con dedicación para 
+            que encuentres esas piezas únicas que te hacen destacar, con atención personalizada y 
+            envíos a todo Chile.
+        </p>
+    </div>
     
-    <!-- Hero Section -->
-    <section class="hero-nosotros">
-        <div class="hero-content">
-            <h1>CONOCE <span class="accent">NUESTRA HISTORIA</span></h1>
-            <p>Desde Chile para el mundo</p>
-        </div>
-    </section>
-    
-    <!-- Historia Section -->
-    <div class="container">
-        <div class="historia-section">
-            <div class="section-tag">● QUIÉNES SOMOS</div>
-            <h2 class="section-title">LA HISTORIA DE TERRIBLE PIOLA</h2>
-            
-            <p class="historia-text">
-                Todo comenzó en <strong>2024</strong>, cuando un emprendedor chileno decidió traer a su país las marcas 
-                más exclusivas y codiciadas del streetwear internacional. Lo que empezó como una pasión por la moda 
-                urbana se transformó en <strong>Terrible Piola</strong>, un proyecto independiente que conecta a Chile 
-                con las tendencias globales.
-            </p>
-            
-            <p class="historia-text">
-                Nuestro catálogo incluye piezas de <strong>marcas premium como Guess, Tommy Hilfiger y Michael Kors</strong>, 
-                seleccionadas cuidadosamente para ofrecer lo mejor del mercado. No somos una tienda más: somos el puente 
-                entre el estilo internacional y la calle chilena, trayendo exclusividad, calidad y actitud a cada prenda.
-            </p>
-            
-            <div class="highlight-box">
-                <p>
-                    "¿Qué esperas para cambiar tu estilo? Full tendencias con nosotros. Desde Santiago, 
-                    llevamos lo mejor del mundo directo a tu closet."
-                </p>
-            </div>
-            
-            <p class="historia-text">
-                Como emprendimiento <strong>100% independiente</strong>, cada pedido es una muestra de confianza y 
-                cada cliente forma parte de esta comunidad que crece día a día. Trabajamos con dedicación para 
-                que encuentres esas piezas únicas que te hacen destacar, con atención personalizada y 
-                envíos a todo Chile.
-            </p>
+    <!-- Valores -->
+    <div class="valores-section">
+        <div style="text-align: center;">
+            <div class="section-tag">● NUESTROS VALORES</div>
+            <h2 class="section-title">LO QUE NOS DEFINE</h2>
         </div>
         
-        <!-- Valores -->
-        <div class="valores-section">
-            <div style="text-align: center;">
-                <div class="section-tag">● NUESTROS VALORES</div>
-                <h2 class="section-title">LO QUE NOS DEFINE</h2>
-            </div>
-            
-            <div class="valores-grid">
-                <div class="valor-card">
-                    <div class="valor-icon"><i class="fas fa-gem"></i></div>
-                    <div class="valor-title">Exclusividad</div>
-                    <div class="valor-text">
-                        Traemos marcas premium que no encuentras en cualquier tienda. Cada pieza es seleccionada 
-                        para garantizar que tu estilo sea único.
-                    </div>
-                </div>
-                
-                <div class="valor-card">
-                    <div class="valor-icon"><i class="fas fa-star"></i></div>
-                    <div class="valor-title">Calidad</div>
-                    <div class="valor-text">
-                        Solo trabajamos con marcas reconocidas mundialmente. Calidad garantizada en cada prenda, 
-                        porque mereces lo mejor.
-                    </div>
-                </div>
-                
-                <div class="valor-card">
-                    <div class="valor-icon"><i class="fas fa-fire"></i></div>
-                    <div class="valor-title">Tendencias</div>
-                    <div class="valor-text">
-                        Estamos siempre al día con lo último en moda urbana. Si está de moda en el mundo, 
-                        lo traemos para ti.
-                    </div>
+        <div class="valores-grid">
+            <div class="valor-card">
+                <div class="valor-icon"><i class="fas fa-gem"></i></div>
+                <div class="valor-title">Exclusividad</div>
+                <div class="valor-text">
+                    Traemos marcas premium que no encuentras en cualquier tienda. Cada pieza es seleccionada 
+                    para garantizar que tu estilo sea único.
                 </div>
             </div>
-        </div>
-        
-        <!-- Marcas -->
-        <div class="marcas-section">
-            <div class="section-tag">● NUESTRAS MARCAS</div>
-            <h2 class="section-title">TRABAJAMOS CON LOS MEJORES</h2>
             
-            <div class="marcas-grid">
-                <div class="marca-item">GUESS</div>
-                <div class="marca-item">TOMMY HILFIGER</div>
-                <div class="marca-item">MICHAEL KORS</div>
+            <div class="valor-card">
+                <div class="valor-icon"><i class="fas fa-star"></i></div>
+                <div class="valor-title">Calidad</div>
+                <div class="valor-text">
+                    Solo trabajamos con marcas reconocidas mundialmente. Calidad garantizada en cada prenda, 
+                    porque mereces lo mejor.
+                </div>
             </div>
-        </div>
-        
-        <!-- Fundador -->
-        <div style="text-align: center; margin-bottom: 50px;">
-            <div class="section-tag">● EL EQUIPO</div>
-            <h2 class="section-title">DETRÁS DE LA MARCA</h2>
-        </div>
-        
-        <div class="fundador-section">
-            <div class="fundador-photo">MM</div>
-            <div class="fundador-info">
-                <h3>Matías Muñoz</h3>
-                <div class="role">Fundador & Curador de Estilo</div>
-                <p>
-                    Emprendedor chileno apasionado por la moda urbana y las tendencias globales. 
-                    Desde 2024, trabaja incansablemente para traer las mejores marcas internacionales 
-                    a Chile, construyendo <strong>Terrible Piola</strong> como un referente de exclusividad 
-                    y estilo. Con ojo para detectar las últimas tendencias y compromiso con la calidad, 
-                    Matías selecciona personalmente cada pieza del catálogo para asegurar que cada 
-                    cliente encuentre algo especial.
-                </p>
+            
+            <div class="valor-card">
+                <div class="valor-icon"><i class="fas fa-fire"></i></div>
+                <div class="valor-title">Tendencias</div>
+                <div class="valor-text">
+                    Estamos siempre al día con lo último en moda urbana. Si está de moda en el mundo, 
+                    lo traemos para ti.
+                </div>
             </div>
         </div>
     </div>
     
-    <!-- CTA Section -->
-    <section class="cta-section">
-        <h2 class="cta-title">¿LISTO PARA CAMBIAR TU ESTILO?</h2>
-        <p class="cta-subtitle">Descubre nuestras colecciones exclusivas</p>
-        <a href="{% url 'tienda:home' %}" class="btn-cta">Ver Catálogo</a>
-    </section>
+    <!-- Marcas -->
+    <div class="marcas-section">
+        <div class="section-tag">● NUESTRAS MARCAS</div>
+        <h2 class="section-title">TRABAJAMOS CON LOS MEJORES</h2>
+        
+        <div class="marcas-grid">
+            <div class="marca-item">GUESS</div>
+            <div class="marca-item">TOMMY HILFIGER</div>
+            <div class="marca-item">MICHAEL KORS</div>
+        </div>
+    </div>
     
-    <!-- Footer -->
- <footer class="footer">
+    <!-- Fundador -->
+    <div style="text-align: center; margin-bottom: 50px;">
+        <div class="section-tag">● EL EQUIPO</div>
+        <h2 class="section-title">DETRÁS DE LA MARCA</h2>
+    </div>
+    
+    <div class="fundador-section">
+        <div class="fundador-photo">MM</div>
+        <div class="fundador-info">
+            <h3>Matías Muñoz</h3>
+            <div class="role">Fundador & Curador de Estilo</div>
+            <p>
+                Emprendedor chileno apasionado por la moda urbana y las tendencias globales. 
+                Desde 2024, trabaja incansablemente para traer las mejores marcas internacionales 
+                a Chile, construyendo <strong>Terrible Piola</strong> como un referente de exclusividad 
+                y estilo. Con ojo para detectar las últimas tendencias y compromiso con la calidad, 
+                Matías selecciona personalmente cada pieza del catálogo para asegurar que cada 
+                cliente encuentre algo especial.
+            </p>
+        </div>
+    </div>
+</div>
+
+<!-- CTA Section -->
+<section class="cta-section">
+    <h2 class="cta-title">¿LISTO PARA CAMBIAR TU ESTILO?</h2>
+    <p class="cta-subtitle">Descubre nuestras colecciones exclusivas</p>
+    <a href="{% url 'tienda:home' %}" class="btn-cta">Ver Catálogo</a>
+</section>
+
+<!-- Footer -->
+<footer class="footer">
     <div class="footer-social">
-                <a href="https://wa.me/56998060259" target="_blank" class="nav-icon">
-                    <i class="fab fa-whatsapp"></i></a>
+        <a href="#"><i class="fab fa-facebook"></i></a>
         <a href="https://www.instagram.com/terriblepiolas.cl/"><i class="fab fa-instagram"></i></a>
+        <a href="#"><i class="fab fa-twitter"></i></a>
     </div>
     <p class="footer-text">© 2025 TERRIBLE PIOLA. Todos los derechos reservados.</p>
 </footer>
-</body>
-</html>
+{% endblock %}
